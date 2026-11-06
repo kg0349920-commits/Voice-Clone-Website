@@ -1,0 +1,779 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoxClone AI | VIP Studio</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #070914;
+    --card: #11172a;
+    --border: #29334d;
+    --purple: #8957ff;
+    --blue: #4285ff;
+    --cyan: #24d4df;
+    --text: #f7f8ff;
+    --muted: #9ba8c5;
+    --green: #5cf0b5;
+    --red: #ff718b;
+}
+
+body {
+    min-height: 100vh;
+    padding: 25px;
+    font-family: Arial, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(ellipse at 10% 0%, #6638bd45, transparent 40%),
+        radial-gradient(ellipse at 90% 90%, #087caa30, transparent 40%),
+        var(--bg);
+}
+
+button, input, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0 55px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: #9b7aff;
+}
+
+.status {
+    padding: 10px 15px;
+    border: 1px solid #5cf0b555;
+    border-radius: 30px;
+    color: var(--green);
+    font-size: 12px;
+    background: #5cf0b510;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 10px 16px;
+    border: 1px solid #8957ff66;
+    border-radius: 30px;
+    color: #c8baff;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+h1 {
+    font-size: clamp(38px, 7vw, 70px);
+    letter-spacing: -3px;
+    margin: 25px 0 15px;
+}
+
+.gradient {
+    background: linear-gradient(90deg, #c4b5fd, #70a5ff, #5ee7e7);
+    color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    max-width: 550px;
+    margin: auto;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 22px;
+}
+
+.card {
+    padding: 27px;
+    border: 1px solid #ffffff16;
+    border-radius: 23px;
+    background: #11172ae8;
+    box-shadow: 0 20px 70px #0005;
+    backdrop-filter: blur(15px);
+}
+
+.card h2 {
+    font-size: 19px;
+    margin-bottom: 9px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    margin: 18px 0 9px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.counter {
+    float: right;
+    color: var(--muted);
+    font-weight: normal;
+}
+
+textarea, input, select {
+    width: 100%;
+    padding: 14px;
+    color: white;
+    background: #080d1b;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+}
+
+textarea {
+    min-height: 170px;
+    resize: vertical;
+    line-height: 1.7;
+}
+
+textarea:focus, input:focus, select:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px #8957ff18;
+}
+
+input[type="file"] {
+    font-size: 12px;
+}
+
+input[type="file"]::file-selector-button {
+    background: #272143;
+    color: white;
+    border: 0;
+    border-radius: 7px;
+    padding: 9px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.main-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 22px;
+    border: none;
+    border-radius: 13px;
+    color: white;
+    font-weight: bold;
+    background: linear-gradient(100deg, #7c3aed, #536dff, #19aeca);
+    box-shadow: 0 8px 30px #5c51e444;
+    transition: .25s;
+}
+
+.main-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px #5c51e466;
+}
+
+.main-btn:disabled {
+    opacity: .6;
+    cursor: wait;
+    transform: none;
+}
+
+.message {
+    min-height: 22px;
+    margin-top: 15px;
+    font-size: 12px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.progress {
+    width: 100%;
+    height: 6px;
+    margin-top: 12px;
+    border-radius: 20px;
+    background: #252d43;
+    overflow: hidden;
+    display: none;
+}
+
+.progress-bar {
+    width: 35%;
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #8957ff, #24d4df);
+    animation: loading 1.5s infinite alternate;
+}
+
+@keyframes loading {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(190%); }
+}
+
+.wave {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #080d1b;
+    overflow: hidden;
+}
+
+.wave i {
+    width: 4px;
+    height: var(--h);
+    border-radius: 5px;
+    background: linear-gradient(#62e8ed, #8957ff);
+    animation: wave 1s ease-in-out infinite alternate;
+}
+
+.wave i:nth-child(2n) {
+    animation-delay: .2s;
+}
+
+.wave i:nth-child(3n) {
+    animation-delay: .4s;
+}
+
+@keyframes wave {
+    from { transform: scaleY(.5); }
+    to { transform: scaleY(1.1); }
+}
+
+.result {
+    margin-top: 25px;
+}
+
+.result h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.result p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+audio {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.download {
+    display: block;
+    margin-top: 18px;
+    padding: 13px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    background: #282044;
+    border: 1px solid #8957ff66;
+    border-radius: 11px;
+}
+
+.download:hover {
+    background: #382b65;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 22px 0;
+}
+
+.feature {
+    padding: 20px;
+    background: #11172acc;
+    border: 1px solid #ffffff15;
+    border-radius: 15px;
+    font-size: 13px;
+}
+
+.feature span {
+    display: block;
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.security-note {
+    margin-top: 14px;
+    color: #aab6d2;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 24px 0;
+    border-top: 1px solid #ffffff18;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+footer strong {
+    color: white;
+}
+
+@media(max-width: 760px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        padding-bottom: 35px;
+    }
+}
+
+@media(max-width: 450px) {
+    body {
+        padding: 13px;
+    }
+
+    .card {
+        padding: 19px;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        letter-spacing: -2px;
+    }
+
+    footer {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+    <div class="logo">VoxClone <span>AI</span></div>
+    <div class="status" id="status">â— Connecting...</div>
+</header>
+
+<section class="hero">
+    <span class="tag">âœ¦ VIP AI VOICE STUDIO</span>
+
+    <h1>
+        Create Something<br>
+        <span class="gradient">Extraordinary.</span>
+    </h1>
+
+    <p>
+        Your ideas deserve to be heard.
+        Transform your written words into speech
+        using a voice sample you own or have permission to use.
+    </p>
+</section>
+
+<main class="grid">
+
+<section class="card">
+    <h2>ðŸŽ™ Create Your Voice</h2>
+    <div class="subtitle">Step 01 Â· Configure your generation</div>
+
+    <label for="text">
+        Your Script
+        <span class="counter" id="count">0/3000</span>
+    </label>
+
+    <textarea
+        id="text"
+        maxlength="3000"
+        placeholder="Type your English script here..."
+    ></textarea>
+
+    <div class="row">
+        <div>
+            <label for="language">Language</label>
+            <select id="language">
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="voice">Voice Sample</label>
+            <input
+                id="voice"
+                type="file"
+                accept=".wav,.mp3,.m4a,audio/wav,audio/mpeg,audio/mp4"
+            >
+        </div>
+    </div>
+
+    <div class="security-note">
+        Use a clear voice recording of at least 3 seconds.
+        Only upload voices you own or have permission to use.
+    </div>
+
+    <button class="main-btn" id="generate">
+        âœ¦ Generate Voice
+    </button>
+
+    <div class="progress" id="progress">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="message" id="message" role="status"></div>
+</section>
+
+<aside class="card">
+    <h2>â™« Your Audio</h2>
+    <div class="subtitle">Step 02 Â· Listen and download</div>
+
+    <div class="wave">
+        <i style="--h:25px"></i>
+        <i style="--h:50px"></i>
+        <i style="--h:35px"></i>
+        <i style="--h:75px"></i>
+        <i style="--h:45px"></i>
+        <i style="--h:95px"></i>
+        <i style="--h:55px"></i>
+        <i style="--h:30px"></i>
+        <i style="--h:70px"></i>
+        <i style="--h:40px"></i>
+        <i style="--h:85px"></i>
+        <i style="--h:28px"></i>
+        <i style="--h:58px"></i>
+        <i style="--h:38px"></i>
+        <i style="--h:70px"></i>
+    </div>
+
+    <div class="result">
+        <h3 id="resultTitle">Ready when you are</h3>
+
+        <p id="resultDesc">
+            Your generated audio will appear here.
+        </p>
+
+        <audio id="player" controls hidden></audio>
+
+        <a
+            id="download"
+            class="download"
+            hidden
+            download="voxclone-audio.wav"
+        >
+            â†“ Download Audio
+        </a>
+    </div>
+</aside>
+
+</main>
+
+<section class="features">
+    <div class="feature">
+        âœ¦ AI Voice Generation
+        <span>Convert your text into natural speech.</span>
+    </div>
+
+    <div class="feature">
+        â—‰ Simple Workflow
+        <span>Enter text, upload audio, generate and listen.</span>
+    </div>
+
+    <div class="feature">
+        âœ“ Permission First
+        <span>Use only voice samples you have permission to use.</span>
+    </div>
+</section>
+
+<footer>
+    <span>Â© <span id="year"></span> VoxClone AI</span>
+    <span>Created by <strong>Wajahat Abbas</strong></span>
+</footer>
+
+</div>
+
+<script>
+// ==========================================
+// VOXCLONE AI - COMPLETE JAVASCRIPT
+// Created by Wajahat Abbas
+// ==========================================
+
+// Backend URL
+let API_BASE = window.location.origin;
+
+// Get HTML elements
+let textBox = document.getElementById("text");
+let voiceBox = document.getElementById("voice");
+let button = document.getElementById("generate");
+
+let messageBox = document.getElementById("message");
+let player = document.getElementById("player");
+let downloadLink = document.getElementById("download");
+let progress = document.getElementById("progress");
+
+let audioURL = null;
+
+// Set current year
+document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+// ==========================================
+// 1. CHARACTER COUNTER
+// ==========================================
+textBox.addEventListener("input", function() {
+    document.getElementById("count").textContent =
+        textBox.value.length + "/3000";
+});
+
+// ==========================================
+// 2. SHOW MESSAGE
+// ==========================================
+function showMessage(message, type) {
+    messageBox.textContent = message;
+
+    if (type === "success") {
+        messageBox.style.color = "#5cf0b5";
+    }
+    else if (type === "error") {
+        messageBox.style.color = "#ff718b";
+    }
+    else {
+        messageBox.style.color = "#b9c8ff";
+    }
+}
+
+// ==========================================
+// 3. CHECK BACKEND CONNECTION
+// ==========================================
+async function checkAPI() {
+    let status = document.getElementById("status");
+
+    try {
+        let response = await fetch(API_BASE + "/health");
+
+        if (!response.ok) {
+            throw new Error("Backend unavailable");
+        }
+
+        let data = await response.json();
+
+        if (data.status === "ok" && data.model_loaded === true) {
+            status.textContent = "â— Studio Online";
+            status.style.color = "#22c55e";
+        }
+        else {
+            status.textContent = "â— Model Loading";
+            status.style.color = "#f59e0b";
+        }
+    }
+    catch (error) {
+        status.textContent = "â— Backend Offline";
+        status.style.color = "#ef4444";
+
+        console.error("Backend Error:", error);
+    }
+}
+
+// ==========================================
+// 4. GENERATE VOICE
+// ==========================================
+button.addEventListener("click", async function() {
+
+    // Get user text and uploaded voice
+    let script = textBox.value.trim();
+    let sample = voiceBox.files[0];
+
+    // Check text
+    if (!script) {
+        showMessage("Please enter your script.", "error");
+        textBox.focus();
+        return;
+    }
+
+    // Check text length
+    if (script.length > 3000) {
+        showMessage("Maximum 3000 characters allowed.", "error");
+        return;
+    }
+
+    // Check voice file
+    if (!sample) {
+        showMessage("Please upload a voice sample.", "error");
+        voiceBox.focus();
+        return;
+    }
+
+    // Allowed audio formats
+    let allowedTypes = [".wav", ".mp3", ".m4a"];
+    let extension = "." + sample.name.split(".").pop().toLowerCase();
+
+    if (!allowedTypes.includes(extension)) {
+        showMessage("Upload WAV, MP3 or M4A file.", "error");
+        return;
+    }
+
+    // Create FormData
+    let formData = new FormData();
+
+    formData.append("text", script);
+    formData.append("language", "en");
+    formData.append("voice", sample);
+
+    // Start loading
+    button.disabled = true;
+    button.textContent = "Generating Audio...";
+    progress.style.display = "block";
+
+    showMessage(
+        "Your voice is being generated. Please wait...",
+        "info"
+    );
+
+    document.getElementById("resultTitle").textContent =
+        "Generating Your Voice...";
+
+    document.getElementById("resultDesc").textContent =
+        "Please wait while XTTS-v2 processes your audio.";
+
+    try {
+        // Send request to Flask backend
+        let response = await fetch(API_BASE + "/api/clone", {
+            method: "POST",
+            body: formData
+        });
+
+        // Get JSON response
+        let data = await response.json();
+
+        // Check backend error
+        if (!response.ok) {
+            throw new Error(data.error || "Generation failed.");
+        }
+
+        // Check audio URL
+        if (!data.audio_url) {
+            throw new Error("Audio URL not received from server.");
+        }
+
+        // Download generated audio from backend
+        let audioResponse = await fetch(
+            new URL(data.audio_url, API_BASE)
+        );
+
+        if (!audioResponse.ok) {
+            throw new Error("Unable to load generated audio.");
+        }
+
+        // Convert response into audio blob
+        let blob = await audioResponse.blob();
+
+        if (!blob.size) {
+            throw new Error("Generated audio is empty.");
+        }
+
+        // Remove previous audio URL
+        if (audioURL) {
+            URL.revokeObjectURL(audioURL);
+        }
+
+        // Create new audio URL
+        audioURL = URL.createObjectURL(blob);
+
+        // Show audio player
+        player.src = audioURL;
+        player.hidden = false;
+
+        // Show download button
+        downloadLink.href = audioURL;
+        downloadLink.download = "voxclone-audio.wav";
+        downloadLink.hidden = false;
+
+        // Update result section
+        document.getElementById("resultTitle").textContent =
+            "Your Voice Is Ready!";
+
+        document.getElementById("resultDesc").textContent =
+            "Your audio has been generated successfully.";
+
+        showMessage(
+            "Success! Your audio is ready.",
+            "success"
+        );
+    }
+    catch(error) {
+        console.error("Voice Generation Error:", error);
+
+        showMessage(
+            "Generation failed: " + error.message,
+            "error"
+        );
+
+        document.getElementById("resultTitle").textContent =
+            "Generation Failed";
+
+        document.getElementById("resultDesc").textContent =
+            "Check your backend terminal for more information.";
+    }
+    finally {
+        // Stop loading
+        button.disabled = false;
+        button.textContent = "âœ¦ Generate Voice";
+        progress.style.display = "none";
+    }
+});
+
+// ==========================================
+// 5. START BACKEND CHECK
+// ==========================================
+checkAPI();
+</script>
+
+</body>
+</html>
+

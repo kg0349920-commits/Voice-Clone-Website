@@ -1,0 +1,13 @@
+coqui-tts
+torch
+torchaudio
+transformers
+flask
+flask-cors
+gradio
+huggingface-hub
+scikit-learn
+librosa
+soundfile
+numpy
+scipy

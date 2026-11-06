@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080706">
+<title>VoxClone AI | VIP Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070706;--panel:rgba(255,255,255,.045);--gold:#d6a94e;--gold2:#ffe6a6;
+  --text:#f8f2e6;--muted:#a69b88;--line:rgba(214,169,78,.22);
+  --green:#9fe0ad;--red:#ffaaaa;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;color:var(--text);font-family:"DM Sans",sans-serif;overflow-x:hidden;
+  background:radial-gradient(ellipse at 50% -10%,rgba(190,132,37,.19),transparent 48%),
+             radial-gradient(ellipse at 0% 55%,rgba(128,86,25,.09),transparent 35%),var(--bg);
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+  background-size:52px 52px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+#particles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.particle{position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;background:var(--gold2);
+  box-shadow:0 0 12px var(--gold);opacity:0;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(0) scale(.5);opacity:0}15%{opacity:.65}85%{opacity:.35}100%{transform:translateY(-110vh) scale(1.3);opacity:0}}
+.container{width:min(1120px,92%);margin:auto;position:relative;z-index:1}
+.navbar{height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07)}
+.logo{font-family:Orbitron,sans-serif;font-size:19px;font-weight:800;letter-spacing:1px;color:var(--gold2);text-shadow:0 0 24px rgba(214,169,78,.24)}
+.logo span{color:#fff}
+.nav-pill{border:1px solid var(--line);background:rgba(214,169,78,.06);color:var(--gold2);padding:9px 14px;border-radius:30px;font-size:10px;font-weight:700;letter-spacing:1.5px}
+.hero{text-align:center;padding:70px 0 20px;animation:rise .8s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border:1px solid var(--line);border-radius:30px;background:rgba(214,169,78,.055);color:var(--gold2);font-size:10px;letter-spacing:2px;font-weight:700}
+.eyebrow i{width:6px;height:6px;border-radius:50%;background:#e6bc68;box-shadow:0 0 10px #e6bc68}
+h1{font-size:clamp(36px,6.5vw,70px);line-height:1.08;letter-spacing:-2.5px;margin:23px 0 15px;font-weight:800}
+.gold-text{background:linear-gradient(100deg,#a97727,#fff0bd 48%,#d4a348);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:630px;margin:auto;color:var(--muted);font-size:14px;line-height:1.8}
+.wave-section{height:100px;display:flex;align-items:center;justify-content:center;gap:5px;margin:12px auto 24px}
+.wave{width:4px;height:13px;border-radius:20px;background:linear-gradient(to top,#805319,#d6a94e,#fff0bd);
+  box-shadow:0 0 10px rgba(214,169,78,.25);transform-origin:center;
+  animation:premiumWave 3.1s ease-in-out infinite alternate}
+.wave:nth-child(2n){animation-delay:-.5s}.wave:nth-child(3n){animation-delay:-1s}
+.wave:nth-child(4n){animation-delay:-1.5s}.wave:nth-child(5n){animation-delay:-2s}
+.wave:nth-child(7n){animation-delay:-.8s}
+@keyframes premiumWave{0%{height:9px;opacity:.42;filter:brightness(.75)}50%{height:42px;opacity:.85;filter:brightness(1)}100%{height:68px;opacity:1;filter:brightness(1.2)}}
+.studio-card{max-width:790px;margin:0 auto 55px;padding:clamp(22px,4vw,38px);border:1px solid var(--line);border-radius:25px;
+  background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.018));backdrop-filter:blur(22px);
+  box-shadow:0 25px 85px rgba(0,0,0,.5),inset 0 1px rgba(255,255,255,.07);transition:border-color .3s,box-shadow .3s}
+.studio-card:hover{border-color:rgba(255,220,150,.4);box-shadow:0 28px 90px rgba(0,0,0,.58),0 0 35px rgba(214,169,78,.06)}
+.card-heading{margin-bottom:28px}.card-heading h2{font-size:23px;margin-bottom:8px}.card-heading p{font-size:12px;color:var(--muted);line-height:1.7}
+.form-group{margin-bottom:24px}
+label.field-label{display:block;margin-bottom:11px;color:var(--gold2);font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+.upload-box{display:block;border:1.5px dashed rgba(214,169,78,.4);border-radius:16px;padding:27px 16px;text-align:center;background:rgba(214,169,78,.025);cursor:pointer;transition:.3s}
+.upload-box:hover,.upload-box.dragover{background:rgba(214,169,78,.09);border-color:var(--gold2);transform:translateY(-2px)}
+.upload-icon{font-size:30px;margin-bottom:9px}.upload-box strong{display:block;font-size:13px;margin-bottom:7px}
+.upload-box small{font-size:11px;color:var(--muted)}#voice{display:none}
+.file-info{margin-top:10px;color:var(--gold2);font-size:11px;overflow-wrap:anywhere}
+select,textarea{width:100%;color:#fff;background:rgba(0,0,0,.42);border:1px solid rgba(214,169,78,.23);border-radius:12px;padding:14px;outline:none;font:13px "DM Sans",sans-serif;transition:.25s}
+select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,169,78,.08)}
+select option{background:#17130c;color:white}
+textarea{min-height:155px;resize:vertical;line-height:1.7}
+.text-meta{display:flex;justify-content:space-between;gap:10px;margin-top:8px;font-size:11px;color:var(--muted)}
+.counter{color:var(--gold2)}.counter.over{color:var(--red)}
+.consent{display:flex;gap:10px;align-items:flex-start;margin:22px 0;color:var(--muted);font-size:11px;line-height:1.7}
+.consent input{accent-color:var(--gold);margin-top:3px;flex-shrink:0}
+.generate-btn{width:100%;padding:17px;border:0;border-radius:12px;color:#1a1206;font-size:12px;font-weight:800;letter-spacing:1.6px;cursor:pointer;
+  background:linear-gradient(110deg,#a97724,#ffe5a2,#c18c32);box-shadow:0 8px 28px rgba(214,169,78,.18);transition:.25s}
+.generate-btn:hover:not(:disabled){transform:translateY(-3px);box-shadow:0 14px 36px rgba(214,169,78,.3);filter:brightness(1.06)}
+.generate-btn:active:not(:disabled){transform:scale(.99)}.generate-btn:disabled{opacity:.55;cursor:wait}
+.progress-section{display:none;text-align:center;padding:25px 12px;margin-top:20px;border:1px solid var(--line);border-radius:16px;background:rgba(214,169,78,.035)}
+.progress-section.show{display:block;animation:rise .35s ease}
+.loader{width:48px;height:48px;margin:0 auto 15px;border:3px solid rgba(214,169,78,.16);border-top-color:var(--gold2);border-radius:50%;animation:spin 1.2s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress-section h3{font-size:14px;color:var(--gold2);margin-bottom:7px}.progress-section p{font-size:11px;color:var(--muted);line-height:1.6}
+.result{display:none;margin-top:20px;padding:22px;border:1px solid rgba(112,190,131,.3);border-radius:16px;background:rgba(60,130,75,.07)}
+.result.show{display:block;animation:rise .4s ease}.result h3{color:var(--green);font-size:15px;margin-bottom:12px}
+audio{width:100%;margin:8px 0;height:42px}audio::-webkit-media-controls-panel{background:#e8d3a4}
+.download-btn{display:inline-block;text-decoration:none;color:#171006;background:linear-gradient(100deg,#b88732,#ffe5a2);border-radius:9px;padding:12px 18px;font-size:11px;font-weight:800;margin-top:8px}
+.message{display:none;padding:13px;border-radius:10px;margin-top:14px;font-size:12px;line-height:1.6}
+.message.error{display:block;color:var(--red);border:1px solid rgba(255,100,100,.2);background:rgba(255,60,60,.06)}
+.message.success{display:block;color:var(--green);border:1px solid rgba(112,190,131,.2);background:rgba(60,130,75,.06)}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 auto 65px}
+.feature{padding:23px 19px;border:1px solid var(--line);background:var(--panel);border-radius:17px;backdrop-filter:blur(12px);transition:.3s}
+.feature:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 15px 40px rgba(214,169,78,.07)}
+.feature-icon{font-size:23px;margin-bottom:13px}.feature h3{font-size:13px;margin-bottom:8px}.feature p{color:var(--muted);font-size:11px;line-height:1.7}
+footer{border-top:1px solid rgba(255,255,255,.07);padding:25px 0;text-align:center;color:var(--muted);font-size:11px;line-height:2}
+footer span{color:var(--gold2)}
+@media(max-width:650px){.navbar{height:70px}.logo{font-size:15px}.hero{padding-top:52px}h1{letter-spacing:-1.4px}.features{grid-template-columns:1fr}.studio-card{border-radius:19px}.wave-section{gap:4px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="particles" aria-hidden="true"></div>
+<div class="container">
+  <nav class="navbar">
+    <div class="logo">VOXCLONE <span>AI</span></div>
+    <div class="nav-pill">✦ VIP STUDIO</div>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow"><i></i> NEXT-GEN AI VOICE STUDIO</div>
+    <h1>Give Your Words<br><span class="gold-text">A Voice of Their Own.</span></h1>
+    <p>Transform your script into natural-sounding speech using a voice sample you own or have permission to use.</p>
+  </header>
+
+  <div class="wave-section" id="waveform" aria-label="Animated audio visualizer">
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+    <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+  </div>
+
+  <main>
+    <section class="studio-card">
+      <div class="card-heading">
+        <h2>Voice Cloning Studio</h2>
+        <p>Upload a clear voice recording, enter your script, and generate your audio.</p>
+      </div>
+
+      <form id="cloneForm">
+        <div class="form-group">
+          <label class="field-label" for="voice">01 / Voice sample</label>
+          <label class="upload-box" id="uploadBox" for="voice">
+            <div class="upload-icon">⇧</div>
+            <strong>Drop your audio here or browse files</strong>
+            <small>WAV, MP3 or M4A · Clear speech recommended · 6–30 seconds</small>
+            <div class="file-info" id="fileInfo">No file selected</div>
+          </label>
+          <input type="file" id="voice" name="voice" accept=".wav,.mp3,.m4a,audio/wav,audio/mpeg,audio/mp4" required>
+        </div>
+
+        <div class="form-group">
+          <label class="field-label" for="language">02 / Output language</label>
+          <select id="language" name="language" required>
+            <option value="en" selected>🇬🇧 English</option>
+          </select>
+          <div class="text-meta"><span>XTTS-v2 language support in this server</span><span>English only</span></div>
+        </div>
+
+        <div class="form-group">
+          <label class="field-label" for="text">03 / Your script</label>
+          <textarea id="text" name="text" maxlength="3000" placeholder="Type or paste the text you want to convert into speech..." required></textarea>
+          <div class="text-meta"><span>Maximum 3,000 characters</span><span class="counter" id="counter">0 / 3000</span></div>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="consent" required>
+          <span>I confirm that this is my own voice recording or that I have the speaker’s permission to use it. I will not impersonate someone or mislead others.</span>
+        </label>
+
+        <button class="generate-btn" id="generateBtn" type="submit">✦ GENERATE VOICE</button>
+      </form>
+
+      <section class="progress-section" id="progress" aria-live="polite">
+        <div class="loader"></div>
+        <h3>Creating your voice...</h3>
+        <p>XTTS-v2 is processing your recording and script. This can take a little while. Please keep this page open.</p>
+      </section>
+
+      <section class="result" id="result">
+        <h3>✓ Your audio is ready</h3>
+        <audio id="audioPlayer" controls preload="none"></audio>
+        <a class="download-btn" id="downloadBtn" href="#" download="voxclone-voice.wav">↓ DOWNLOAD AUDIO</a>
+      </section>
+
+      <div class="message" id="message" role="status"></div>
+    </section>
+
+    <section class="features">
+      <article class="feature">
+        <div class="feature-icon">✧</div>
+        <h3>Personal Voice Profile</h3>
+        <p>Use a clear reference recording that you own or have permission to use.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">◈</div>
+        <h3>Natural Speech Output</h3>
+        <p>Generate speech from your written script with the XTTS-v2 engine.</p>
+      </article>
+      <article class="feature">
+        <div class="feature-icon">⬡</div>
+        <h3>Private Studio Workflow</h3>
+        <p>Your generated audio is provided directly in this studio for playback and download.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    <div>Crafted with precision · <span>VOXCLONE AI VIP STUDIO</span></div>
+    <div>Use voice recordings responsibly and only with the speaker’s permission.</div>
+  </footer>
+</div>
+
+<script>
+const voiceInput = document.getElementById("voice");
+const uploadBox = document.getElementById("uploadBox");
+const fileInfo = document.getElementById("fileInfo");
+const textInput = document.getElementById("text");
+const counter = document.getElementById("counter");
+const form = document.getElementById("cloneForm");
+const generateBtn = document.getElementById("generateBtn");
+const progress = document.getElementById("progress");
+const result = document.getElementById("result");
+const audioPlayer = document.getElementById("audioPlayer");
+const downloadBtn = document.getElementById("downloadBtn");
+const message = document.getElementById("message");
+
+function showMessage(text, type) {
+  message.textContent = text;
+  message.className = "message " + type;
+}
+
+function clearMessage() {
+  message.textContent = "";
+  message.className = "message";
+}
+
+function displayFile(file) {
+  if (!file) {
+    fileInfo.textContent = "No file selected";
+    return;
+  }
+  const allowed = [".wav", ".mp3", ".m4a"];
+  const extension = file.name.slice(file.name.lastIndexOf(".")).toLowerCase();
+  if (!allowed.includes(extension)) {
+    voiceInput.value = "";
+    fileInfo.textContent = "Unsupported file type";
+    showMessage("Please select a WAV, MP3, or M4A audio file.", "error");
+    return;
+  }
+  fileInfo.textContent = file.name + " · " + (file.size / (1024 * 1024)).toFixed(2) + " MB";
+  clearMessage();
+}
+
+voiceInput.addEventListener("change", () => displayFile(voiceInput.files[0]));
+
+["dragenter", "dragover"].forEach(eventName => {
+  uploadBox.addEventListener(eventName, event => {
+    event.preventDefault();
+    uploadBox.classList.add("dragover");
+  });
+});
+["dragleave", "drop"].forEach(eventName => {
+  uploadBox.addEventListener(eventName, event => {
+    event.preventDefault();
+    uploadBox.classList.remove("dragover");
+  });
+});
+uploadBox.addEventListener("drop", event => {
+  const file = event.dataTransfer.files[0];
+  if (!file) return;
+  const transfer = new DataTransfer();
+  transfer.items.add(file);
+  voiceInput.files = transfer.files;
+  displayFile(file);
+});
+
+textInput.addEventListener("input", () => {
+  const length = textInput.value.length;
+  counter.textContent = length + " / 3000";
+  counter.classList.toggle("over", length > 3000);
+});
+
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+  clearMessage();
+  result.classList.remove("show");
+  audioPlayer.removeAttribute("src");
+  audioPlayer.load();
+
+  const file = voiceInput.files[0];
+  const script = textInput.value.trim();
+  if (!file) {
+    showMessage("Please upload a voice sample first.", "error");
+    return;
+  }
+  if (!script) {
+    showMessage("Please enter the text you want to convert.", "error");
+    return;
+  }
+  if (script.length > 3000) {
+    showMessage("Your script must be 3,000 characters or fewer.", "error");
+    return;
+  }
+  if (!document.getElementById("consent").checked) {
+    showMessage("Please confirm that you own the voice recording or have permission to use it.", "error");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("voice", file);
+  formData.append("text", script);
+  formData.append("language", document.getElementById("language").value);
+
+  generateBtn.disabled = true;
+  generateBtn.textContent = "GENERATING...";
+  progress.classList.add("show");
+
+  try {
+    const response = await fetch("/api/clone", {
+      method: "POST",
+      body: formData
+    });
+
+    let data;
+    try {
+      data = await response.json();
+    } catch {
+      throw new Error("The server returned an unreadable response. Check the Flask terminal.");
+    }
+
+    if (!response.ok || !data.success || !data.audio_url) {
+      throw new Error(data.error || "Voice generation failed. Please try again.");
+    }
+
+    const audioUrl = data.audio_url + (data.audio_url.includes("?") ? "&" : "?") + "t=" + Date.now();
+    audioPlayer.src = audioUrl;
+    downloadBtn.href = data.audio_url;
+    result.classList.add("show");
+    showMessage("Your voice has been generated successfully.", "success");
+    result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  } catch (error) {
+    showMessage(error.message || "Could not connect to the server. Make sure Flask is running.", "error");
+  } finally {
+    progress.classList.remove("show");
+    generateBtn.disabled = false;
+    generateBtn.textContent = "✦ GENERATE VOICE";
+  }
+});
+
+// Decorative background particles
+const particleLayer = document.getElementById("particles");
+for (let i = 0; i < 24; i++) {
+  const particle = document.createElement("span");
+  particle.className = "particle";
+  particle.style.left = Math.random() * 100 + "%";
+  particle.style.animationDuration = (12 + Math.random() * 16) + "s";
+  particle.style.animationDelay = (-Math.random() * 25) + "s";
+  particle.style.opacity = "0";
+  particleLayer.appendChild(particle);
+}
+</script>
+</body>
+</html>

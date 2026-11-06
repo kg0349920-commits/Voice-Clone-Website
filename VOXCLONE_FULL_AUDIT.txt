@@ -1,0 +1,385 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261101012722
+Username: DESKTOP-3TDIULN\Apple Computer
+RunAs User: DESKTOP-3TDIULN\Apple Computer
+Configuration Name: 
+Machine: DESKTOP-3TDIULN (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\Apple Computer\AppData\Local\Programs\Microsoft VS Code\2c33b50b16\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 2604
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is D:\wajahat developer\Voice Clone Website\VOXCLONE_FULL_AUDIT.txt
+
+====================================
+ VOXCLONE AI COMPLETE WEBSITE AUDIT
+====================================
+
+[1] REQUIRED FILES
+OK: index.html
+OK: server.py
+OK: voices\index.html
+OK: voices\server.py
+OK: .venv\Scripts\python.exe
+
+[2] PROJECT FILE INVENTORY
+
+FullName                                                                                               L
+                                                                                                       e
+                                                                                                       n
+                                                                                                       g
+                                                                                                       t
+                                                                                                       h
+--------                                                                                               -
+D:\wajahat developer\Voice Clone Website\all_code.txt                                                  0
+D:\wajahat developer\Voice Clone Website\index.html                                                    5
+D:\wajahat developer\Voice Clone Website\index.html.backup                                             4
+D:\wajahat developer\Voice Clone Website\output.wav                                                    2
+D:\wajahat developer\Voice Clone Website\requirements.txt                                              0
+D:\wajahat developer\Voice Clone Website\server.py                                                     3
+D:\wajahat developer\Voice Clone Website\start.bat                                                     9
+D:\wajahat developer\Voice Clone Website\VOXCLONE_FULL_AUDIT.txt                                       0
+D:\wajahat developer\Voice Clone Website\outputs\voice_0cd05ee49d8146259182cf3f604ef8c2.wav            0
+D:\wajahat developer\Voice Clone Website\outputs\voice_0f588a8561ad4883ac88f08743237ae1.wav            2
+D:\wajahat developer\Voice Clone Website\outputs\voice_1dfcc3521dcb40c0b81323168c5fd1ad.wav            2
+D:\wajahat developer\Voice Clone Website\outputs\voice_27dbe45c9bd243a2925647d11b7587a3.wav            0
+D:\wajahat developer\Voice Clone Website\outputs\voice_2921e9fe4c27453fbd6091a445f29043.wav            0
+D:\wajahat developer\Voice Clone Website\outputs\voice_68d52f9bde884673882be9dfa36fef57.wav            8
+D:\wajahat developer\Voice Clone Website\outputs\voice_7881178e21d04d28ac707124090bff89.wav            8
+D:\wajahat developer\Voice Clone Website\outputs\voice_86787d1460a84df59d585b35326ae401.wav            6
+D:\wajahat developer\Voice Clone Website\outputs\voice_8e06cbba1f6c410ea75e9ea9c0321253.wav            6
+D:\wajahat developer\Voice Clone Website\outputs\voice_96f3377a216246ee8917332d52722772.wav            2
+D:\wajahat developer\Voice Clone Website\outputs\voice_ce16011a457b4c0caea360ed97d917d0.wav            0
+D:\wajahat developer\Voice Clone Website\outputs\voice_dd98037f07074b638dbdaf5d7b3f2b8e.wav            8
+D:\wajahat developer\Voice Clone Website\outputs\voice_e4726c8e59bc449b86fa421f37348fed.wav            2
+D:\wajahat developer\Voice Clone Website\voices\index.html                                             8
+D:\wajahat developer\Voice Clone Website\voices\requirements.txt                                       7
+D:\wajahat developer\Voice Clone Website\voices\sample-backup.wav                                      2
+D:\wajahat developer\Voice Clone Website\voices\sample.mp3                                             2
+D:\wajahat developer\Voice Clone Website\voices\sample.wav                                             2
+D:\wajahat developer\Voice Clone Website\voices\server.py                                              8
+D:\wajahat developer\Voice Clone Website\voices\server.py.backup                                       7
+D:\wajahat developer\Voice Clone Website\voices\start.bat                                              8
+D:\wajahat developer\Voice Clone Website\voices\generated\voice_708d5c0c9e614c07b2c4e4f50162940d.mp3   2
+D:\wajahat developer\Voice Clone Website\voices\generated\voice_ce27e952924e4dd889cd243c630baeae.mp3   2
+D:\wajahat developer\Voice Clone Website\voices\generated\voice_dd531bc150dc47c3891aba84c4d43416.mp3   2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0001.wav 4
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0002.wav 4
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0003.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0004.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0005.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0006.wav 4
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0007.wav 6
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0008.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0009.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0010.wav 8
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0011.wav 4
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0012.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0013.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0014.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0015.wav 6
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0016.wav 6
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0017.wav 4
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0018.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0019.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0020.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0021.wav 8
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0022.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0023.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0024.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0025.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0026.wav 6
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0027.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0028.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0029.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0030.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0031.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0032.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0033.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0034.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0035.wav 8
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0036.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_3639ffee1873475881c5d816ee150f95_0037.wav 0
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0001.wav 4
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0002.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0003.wav 6
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0004.wav 6
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0005.wav 6
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0006.wav 4
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0007.wav 8
+D:\wajahat developer\Voice Clone Website\voices\outputs\temp_6f59eb42df1045108e2494014d2a45d1_0008.wav 2
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_0ff7c7535d3448a9a2e7e2b69d047367.wav     4
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_13936b1b5f41429097156a0817a7ff9e.wav     4
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_255a9c8eaf1c4cabb7c4ad17112550f5.wav     4
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_2f558b859d78412089ca9df28295c931.wav     6
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_325940d729154d76baafe5da755636b4.wav     2
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_3f93197079814bdca28959138ea0a8c7.wav     0
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_5c714cdc256d48d3a9b2870b399cf392.wav     8
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_7f5bb78db45444c58d4c28a0f67b4e91.wav     6
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_94772d184fee4a8ebcdcfcb02aed999e.wav     2
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_c46243b7d3ab40e5a1f425913f576ef9.wav     8
+D:\wajahat developer\Voice Clone Website\voices\outputs\voice_dbddce3592a9463284abfafe7a3df519.wav     4
+D:\wajahat developer\Voice Clone Website\voices\outputs\voxora_128fcb5c86cd4e09b7d242beb4c493d8.wav    4
+D:\wajahat developer\Voice Clone Website\voices\outputs\voxora_35ea37b26c0c4e819dc21b1b5fd25a51.wav    2
+D:\wajahat developer\Voice Clone Website\voices\outputs\voxora_75bd058a98704182babd45a58eb4b3b9.wav    8
+D:\wajahat developer\Voice Clone Website\voices\outputs\voxora_882dedcb380e4f45af068dda8dcdeff2.wav    0
+D:\wajahat developer\Voice Clone Website\voices\outputs\voxora_c67b8275124f45e48f934d42270a50b1.wav    2
+D:\wajahat developer\Voice Clone Website\voices\uploads\reference_58c8a73e063a4cb487be4743e9ea3288.mp3 2
+D:\wajahat developer\Voice Clone Website\voices\voices\main.py                                         7
+
+
+
+[3] CHARACTER LIMIT CHECK
+D:\wajahat developer\Voice Clone Website\index.html:431 <span class="counter" id="count">0/3000</span>
+D:\wajahat developer\Voice Clone Website\index.html:436 maxlength="3000"
+D:\wajahat developer\Voice Clone Website\index.html:552 let MAX_CHARACTERS = 3000;
+D:\wajahat developer\Voice Clone Website\index.html:656 "Maximum " + MAX_CHARACTERS + " characters allowed.",
+D:\wajahat developer\Voice Clone Website\server.py:158 text = re.sub(r"[\U00010000-\U0010ffff]", "", text)   # emoji
+D:\wajahat developer\Voice Clone Website\server.py:276 if len(text) > 3000:
+D:\wajahat developer\Voice Clone Website\server.py:278 "error": "Please keep the text under 3000 characters."
+D:\wajahat developer\Voice Clone Website\voices\index.html:430 <span class="counter" id="count">0/3000</span>
+D:\wajahat developer\Voice Clone Website\voices\index.html:435 maxlength="3000"
+D:\wajahat developer\Voice Clone Website\voices\index.html:571 textBox.value.length + "/3000";
+D:\wajahat developer\Voice Clone Website\voices\index.html:640 if (script.length > 3000) {
+D:\wajahat developer\Voice Clone Website\voices\index.html:641 showMessage("Maximum 3000 characters allowed.", "error");
+D:\wajahat developer\Voice Clone Website\voices\server.py:161 if len(text) > 3000:
+D:\wajahat developer\Voice Clone Website\voices\server.py:163 "error": "Keep text under 3000 characters."
+
+[4] FRONTEND API CONNECTION CHECK
+D:\wajahat developer\Voice Clone Website\index.html:549 let API_BASE = "http://127.0.0.1:5000";
+D:\wajahat developer\Voice Clone Website\index.html:612 let response = await fetch(API_BASE + "/health");
+D:\wajahat developer\Voice Clone Website\index.html:708 let response = await fetch(API_BASE + "/api/clone", {
+D:\wajahat developer\Voice Clone Website\index.html:738 let audioResponse = await fetch(
+D:\wajahat developer\Voice Clone Website\index.html:739 new URL(data.audio_url, API_BASE)
+D:\wajahat developer\Voice Clone Website\server.py:261 @app.route("/api/clone", methods=["POST"])
+D:\wajahat developer\Voice Clone Website\server.py:493 print("http://127.0.0.1:5000")
+D:\wajahat developer\Voice Clone Website\server.py:495 app.run(host="127.0.0.1", port=5000, debug=False, threaded=True)
+D:\wajahat developer\Voice Clone Website\voices\index.html:548 let API_BASE = "http://127.0.0.1:5000";
+D:\wajahat developer\Voice Clone Website\voices\index.html:598 let response = await fetch(API_BASE + "/health");
+D:\wajahat developer\Voice Clone Website\voices\index.html:686 let response = await fetch(API_BASE + "/api/clone", {
+D:\wajahat developer\Voice Clone Website\voices\index.html:705 let audioResponse = await fetch(
+D:\wajahat developer\Voice Clone Website\voices\index.html:706 new URL(data.audio_url, API_BASE)
+D:\wajahat developer\Voice Clone Website\voices\server.py:65 r"/api/*": {"origins": "*"}
+D:\wajahat developer\Voice Clone Website\voices\server.py:143 @app.route("/api/clone", methods=["POST"])
+D:\wajahat developer\Voice Clone Website\voices\server.py:344 print("Flask server starting on port 5000", flush=True)
+D:\wajahat developer\Voice Clone Website\voices\server.py:347 host="127.0.0.1",
+D:\wajahat developer\Voice Clone Website\voices\server.py:348 port=5000,
+D:\wajahat developer\Voice Clone Website\voices\voices\main.py:37 @app.post("/api/generate")
+D:\wajahat developer\Voice Clone Website\voices\voices\main.py:49 @app.get("/api/progress/{job_id}")
+D:\wajahat developer\Voice Clone Website\voices\voices\main.py:57 @app.get("/api/status/{job_id}")
+
+[5] PYTHON SYNTAX CHECK
+
+
+
+
+[6] PYTHON DEPENDENCIES
+
+
+[7] BACKEND ROUTES AND SETTINGS
+
+--- .\server.py ---
+
+
+--- .\voices\server.py ---
+
+[8] PORT 5000 SERVER CHECK
+server.py:36:MODEL_NAME = "tts_models/multilingual/multi-dataset/xtts_v2"
+server.py:43:# Quality settings (XTTS ke balanced defaults)
+server.py:58:print("Loading XTTS-v2 model...")
+server.py:64:    xtts = tts.synthesizer.tts_model
+server.py:65:    print("XTTS-v2 loaded successfully.")
+server.py:70:    xtts = None
+server.py:109:        total += len(seg) + len(gap)
+server.py:116:    if len(y) < SR * MIN_REF_SECONDS:
+server.py:138:        latents = xtts.get_conditioning_latents(
+server.py:144:    if len(latent_cache) >= 5:
+server.py:158:    text = re.sub(r"[\U00010000-\U0010ffff]", "", text)   # emoji
+server.py:197:        while len(s) > max_len:            # bohot lambi sentence ko comma/space par todo
+server.py:203:        if len(cur) + len(s) + 1 <= max_len:
+server.py:219:    if len(trimmed) > SR * 0.1:
+server.py:222:    if len(wav) > 2 * n:
+server.py:242:@app.route("/")
+server.py:247:@app.route("/outputs/<filename>")
+server.py:252:@app.route("/health", methods=["GET"])
+server.py:256:        "model_loaded": xtts is not None,
+server.py:261:@app.route("/api/clone", methods=["POST"])
+server.py:264:    if xtts is None:
+server.py:269:    text = request.form.get("text", "").strip()
+server.py:270:    language = request.form.get("language", "en").strip()
+server.py:271:    voice_file = request.files.get("voice")
+server.py:276:    if len(text) > 3000:
+server.py:278:            "error": "Please keep the text under 3000 characters."
+server.py:337:        print("Chunks:", len(chunks))
+server.py:354:            print(f"[{i}/{len(chunks)}] {chunk}")
+server.py:360:                out = xtts.inference(
+server.py:371:            if i < len(chunks):
+server.py:438:        print(f"Generating voice... Language: {language} | Chunks: {len(chunks)}")
+server.py:447:            print(f"[{i}/{len(chunks)}] {chunk}")
+server.py:450:                out = xtts.inference(
+server.py:459:            if i < len(chunks):
+server.py:495:    app.run(host="127.0.0.1", port=5000, debug=False, threaded=True)
+voices\server.py:33:MODEL_NAME = "tts_models/multilingual/multi-dataset/xtts_v2"
+voices\server.py:62:app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024
+voices\server.py:70:# LOAD XTTS MODEL
+voices\server.py:73:print("Loading XTTS-v2 on:", DEVICE, flush=True)
+voices\server.py:77:xtts_model = tts.synthesizer.tts_model
+voices\server.py:79:print("XTTS-v2 loaded successfully!", flush=True)
+voices\server.py:108:    if len(y) < SAMPLE_RATE * 3:
+voices\server.py:129:@app.route("/health", methods=["GET"])
+voices\server.py:134:        "model_loaded": xtts_model is not None,
+voices\server.py:143:@app.route("/api/clone", methods=["POST"])
+voices\server.py:146:    text = request.form.get("text", "").strip()
+voices\server.py:148:    language = request.form.get(
+voices\server.py:153:    voice_file = request.files.get("voice")
+voices\server.py:161:    if len(text) > 3000:
+voices\server.py:163:            "error": "Keep text under 3000 characters."
+voices\server.py:229:            xtts_model.get_conditioning_latents(
+voices\server.py:242:            result = xtts_model.inference(
+voices\server.py:316:@app.route("/outputs/<filename>", methods=["GET"])
+voices\server.py:346:    app.run(
+voices\server.py:347:        host="127.0.0.1",
+voices\server.py:348:        port=5000,
+
+
+
+
+ProcessId      : 10164
+CreationDate   : 11/1/2026 1:15:58 AM
+ExecutablePath : C:\Users\Apple
+                 Computer\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\python.exe
+CommandLine    : "C:\Users\Apple
+                 Computer\AppData\Roaming\uv\python\cpython-3.11-windows-x86_64-none\python.exe"
+                 .\voices\server.py
+
+
+
+
+[9] SERVER FILE TIMESTAMPS
+
+FullName                                                  LastWriteTime
+--------                                                  -------------
+D:\wajahat developer\Voice Clone Website\server.py        10/31/2026 10:09:57 PM
+D:\wajahat developer\Voice Clone Website\voices\server.py 11/1/2026 12:51:11 AM
+
+
+
+[10] FRONTEND ELEMENTS CHECK
+
+--- D:\wajahat developer\Voice Clone Website\index.html ---
+
+
+--- D:\wajahat developer\Voice Clone Website\voices\index.html ---
+
+[11] CONFIGURATION FILE CHECK
+index.html:7:<title>VoxClone AI | VIP Studio</title>
+index.html:40:button, input, textarea, select {
+index.html:44:button {
+index.html:153:textarea, input, select {
+index.html:163:textarea {
+index.html:169:textarea:focus, input:focus, select:focus {
+index.html:178:input[type="file"]::file-selector-button {
+index.html:404:    <div class="logo">VoxClone <span>AI</span></div>
+index.html:430:        Your Script
+index.html:431:        <span class="counter" id="count">0/3000</span>
+index.html:434:    <textarea
+index.html:436:        maxlength="3000"
+index.html:437:        placeholder="Type your English script here..."
+index.html:438:    ></textarea>
+index.html:463:    <button class="main-btn" id="generate">
+index.html:464:        ✦ Generate Voice
+index.html:465:    </button>
+index.html:500:            Your generated audio will appear here.
+index.html:509:            download="voxclone-audio.wav"
+index.html:526:        <span>Enter text, upload audio, generate and listen.</span>
+index.html:536:    <span>© <span id="year"></span> VoxClone AI</span>
+index.html:542:<script>
+index.html:544:// VOXCLONE AI - COMPLETE JAVASCRIPT
+index.html:557:let button = document.getElementById("generate");
+index.html:638:// 4. GENERATE VOICE
+index.html:640:button.addEventListener("click", async function() {
+index.html:643:    let script = textBox.value.trim();
+index.html:647:    if (!script) {
+index.html:648:        showMessage("Please enter your script.", "error");
+index.html:654:    if (script.length > MAX_CHARACTERS) {
+index.html:681:    formData.append("text", script);
+index.html:686:    button.disabled = true;
+index.html:687:    button.textContent = "Generating Audio...";
+index.html:696:        "Your voice is being generated. Please wait...",
+index.html:708:        let response = await fetch(API_BASE + "/api/clone", {
+index.html:737:        // Download generated audio from backend
+index.html:743:            throw new Error("Unable to load generated audio.");
+index.html:750:            throw new Error("Generated audio is empty.");
+index.html:765:        // Show download button
+index.html:767:        downloadLink.download = "voxclone-audio.wav";
+index.html:775:            "Your audio has been generated successfully.";
+index.html:798:        button.disabled = false;
+index.html:799:        button.textContent = "✦ Generate Voice";
+index.html:809:</script>
+voices\index.html:6:<title>VoxClone AI | VIP Studio</title>
+voices\index.html:39:button, input, textarea {
+voices\index.html:43:button {
+voices\index.html:152:textarea, input, select {
+voices\index.html:162:textarea {
+voices\index.html:168:textarea:focus, input:focus, select:focus {
+voices\index.html:177:input[type="file"]::file-selector-button {
+voices\index.html:403:    <div class="logo">VoxClone <span>AI</span></div>
+voices\index.html:429:        Your Script
+voices\index.html:430:        <span class="counter" id="count">0/3000</span>
+voices\index.html:433:    <textarea
+voices\index.html:435:        maxlength="3000"
+voices\index.html:436:        placeholder="Type your English script here..."
+voices\index.html:437:    ></textarea>
+voices\index.html:462:    <button class="main-btn" id="generate">
+voices\index.html:463:        âœ¦ Generate Voice
+voices\index.html:464:    </button>
+voices\index.html:499:            Your generated audio will appear here.
+voices\index.html:508:            download="voxclone-audio.wav"
+voices\index.html:525:        <span>Enter text, upload audio, generate and listen.</span>
+voices\index.html:535:    <span>Â© <span id="year"></span> VoxClone AI</span>
+voices\index.html:541:<script>
+voices\index.html:543:// VOXCLONE AI - COMPLETE JAVASCRIPT
+voices\index.html:553:let button = document.getElementById("generate");
+voices\index.html:624:// 4. GENERATE VOICE
+voices\index.html:626:button.addEventListener("click", async function() {
+voices\index.html:629:    let script = textBox.value.trim();
+voices\index.html:633:    if (!script) {
+voices\index.html:634:        showMessage("Please enter your script.", "error");
+voices\index.html:640:    if (script.length > 3000) {
+voices\index.html:664:    formData.append("text", script);
+voices\index.html:669:    button.disabled = true;
+voices\index.html:670:    button.textContent = "Generating Audio...";
+voices\index.html:674:        "Your voice is being generated. Please wait...",
+voices\index.html:686:        let response = await fetch(API_BASE + "/api/clone", {
+voices\index.html:704:        // Download generated audio from backend
+voices\index.html:710:            throw new Error("Unable to load generated audio.");
+voices\index.html:717:            throw new Error("Generated audio is empty.");
+voices\index.html:732:        // Show download button
+voices\index.html:734:        downloadLink.download = "voxclone-audio.wav";
+voices\index.html:742:            "Your audio has been generated successfully.";
+voices\index.html:765:        button.disabled = false;
+voices\index.html:766:        button.textContent = "âœ¦ Generate Voice";
+voices\index.html:775:</script>
+
+
+
+Name             Length LastWriteTime
+----             ------ -------------
+requirements.txt      0 10/7/2026 10:09:33 PM
+
+
+
+====================================
+ AUDIT COMPLETED
+====================================
+**********************
+Windows PowerShell transcript end
+End time: 20261101012726
+**********************

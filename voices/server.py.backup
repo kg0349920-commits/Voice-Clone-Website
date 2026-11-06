@@ -1,0 +1,352 @@
+﻿import os
+import uuid
+import threading
+import traceback
+
+import numpy as np
+import librosa
+import soundfile as sf
+import torch
+
+from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
+from TTS.api import TTS
+
+
+# ==========================================
+# PROJECT FOLDERS
+# ==========================================
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+VOICE_FOLDER = os.path.join(BASE_DIR, "voices")
+OUTPUT_FOLDER = os.path.join(BASE_DIR, "outputs")
+
+os.makedirs(VOICE_FOLDER, exist_ok=True)
+os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+
+# ==========================================
+# MODEL SETTINGS
+# ==========================================
+
+MODEL_NAME = "tts_models/multilingual/multi-dataset/xtts_v2"
+SAMPLE_RATE = 24000
+
+GEN_SETTINGS = {
+    "temperature": 0.65,
+    "repetition_penalty": 5.0,
+    "top_k": 40,
+    "top_p": 0.8,
+    "length_penalty": 1.0,
+    "speed": 1.0,
+}
+
+
+# ==========================================
+# CPU PERFORMANCE SETTINGS
+# ==========================================
+
+torch.set_num_threads(4)
+torch.set_num_interop_threads(1)
+
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+
+
+# ==========================================
+# FLASK APP
+# ==========================================
+
+app = Flask(__name__)
+
+app.config["MAX_CONTENT_LENGTH"] = 20 * 1024 * 1024
+
+CORS(app, resources={
+    r"/api/*": {"origins": "*"}
+})
+
+
+# ==========================================
+# LOAD XTTS MODEL
+# ==========================================
+
+print("Loading XTTS-v2 on:", DEVICE, flush=True)
+
+tts = TTS(MODEL_NAME).to(DEVICE)
+
+xtts_model = tts.synthesizer.tts_model
+
+print("XTTS-v2 loaded successfully!", flush=True)
+
+
+# ==========================================
+# GENERATION LOCK
+# ==========================================
+
+generation_lock = threading.Lock()
+
+
+# ==========================================
+# PREPARE VOICE REFERENCE
+# ==========================================
+
+def prepare_reference(src, dst, max_seconds=30):
+
+    y, _ = librosa.load(
+        src,
+        sr=SAMPLE_RATE,
+        mono=True
+    )
+
+    y, _ = librosa.effects.trim(
+        y,
+        top_db=30
+    )
+
+    y = y[:SAMPLE_RATE * max_seconds]
+
+    if len(y) < SAMPLE_RATE * 3:
+        raise ValueError(
+            "Please upload at least 3 seconds of clear speech."
+        )
+
+    peak = float(np.max(np.abs(y)))
+
+    if peak > 0:
+        y = y / peak * 0.95
+
+    sf.write(
+        dst,
+        y,
+        SAMPLE_RATE
+    )
+
+
+# ==========================================
+# HEALTH CHECK
+# ==========================================
+
+@app.route("/health", methods=["GET"])
+def health():
+
+    return jsonify({
+        "status": "ok",
+        "model_loaded": xtts_model is not None,
+        "device": DEVICE
+    })
+
+
+# ==========================================
+# VOICE GENERATION API
+# ==========================================
+
+@app.route("/api/clone", methods=["POST"])
+def clone_voice():
+
+    text = request.form.get("text", "").strip()
+
+    language = request.form.get(
+        "language",
+        "en"
+    ).strip()
+
+    voice_file = request.files.get("voice")
+
+    # Validate text
+    if not text:
+        return jsonify({
+            "error": "Please enter text."
+        }), 400
+
+    if len(text) > 3000:
+        return jsonify({
+            "error": "Keep text under 3000 characters."
+        }), 400
+
+    # English-only demo
+    if language != "en":
+        return jsonify({
+            "error": "This demo supports English only."
+        }), 400
+
+    # Validate uploaded voice
+    if voice_file is None or not voice_file.filename:
+        return jsonify({
+            "error": "Please upload a voice sample."
+        }), 400
+
+    extension = os.path.splitext(
+        voice_file.filename.lower()
+    )[1]
+
+    if extension not in (".wav", ".mp3", ".m4a"):
+        return jsonify({
+            "error": "Use WAV, MP3, or M4A."
+        }), 400
+
+    # Prevent simultaneous generations
+    if not generation_lock.acquire(blocking=False):
+        return jsonify({
+            "error": "Generation busy. Try again shortly."
+        }), 429
+
+    uid = uuid.uuid4().hex
+
+    reference_path = os.path.join(
+        VOICE_FOLDER,
+        uid + extension
+    )
+
+    clean_path = os.path.join(
+        VOICE_FOLDER,
+        uid + "_clean.wav"
+    )
+
+    output_name = "voice_" + uid + ".wav"
+
+    output_path = os.path.join(
+        OUTPUT_FOLDER,
+        output_name
+    )
+
+    try:
+
+        print("Voice generation started...", flush=True)
+
+        # Save uploaded reference audio
+        voice_file.save(reference_path)
+
+        # Clean and prepare reference audio
+        prepare_reference(
+            reference_path,
+            clean_path
+        )
+
+        print("Preparing voice reference...", flush=True)
+
+        # Extract voice conditioning
+        gpt_cond_latent, speaker_embedding = (
+            xtts_model.get_conditioning_latents(
+                audio_path=[clean_path],
+                gpt_cond_len=30,
+                gpt_cond_chunk_len=4,
+                max_ref_length=30
+            )
+        )
+
+        print("Generating speech...", flush=True)
+
+        # Generate speech
+        with torch.inference_mode():
+
+            result = xtts_model.inference(
+                text=text,
+                language="en",
+                gpt_cond_latent=gpt_cond_latent,
+                speaker_embedding=speaker_embedding,
+                enable_text_splitting=True,
+                **GEN_SETTINGS
+            )
+
+        # Convert generated audio
+        wav = np.asarray(
+            result["wav"],
+            dtype=np.float32
+        )
+
+        # Save generated WAV
+        sf.write(
+            output_path,
+            wav,
+            SAMPLE_RATE
+        )
+
+        print("Generation completed successfully!", flush=True)
+
+        return jsonify({
+            "success": True,
+            "audio_url": "/outputs/" + output_name
+        })
+
+    except Exception as e:
+
+        print(
+            "\n========== VOICE GENERATION ERROR ==========",
+            flush=True
+        )
+
+        traceback.print_exc()
+
+        print(
+            "ERROR MESSAGE:",
+            repr(e),
+            flush=True
+        )
+
+        return jsonify({
+            "error": str(e)
+        }), 500
+
+    finally:
+
+        # Remove temporary reference files
+        for path in (reference_path, clean_path):
+
+            try:
+
+                if os.path.exists(path):
+                    os.remove(path)
+
+            except OSError as cleanup_error:
+
+                print(
+                    "Cleanup warning:",
+                    repr(cleanup_error),
+                    flush=True
+                )
+
+        # Release generation lock
+        generation_lock.release()
+
+
+# ==========================================
+# SERVE GENERATED AUDIO
+# ==========================================
+
+@app.route("/outputs/<filename>", methods=["GET"])
+def output_audio(filename):
+
+    if (
+        not filename.startswith("voice_")
+        or not filename.endswith(".wav")
+    ):
+        return jsonify({
+            "error": "Invalid filename"
+        }), 400
+
+    response = send_from_directory(
+        OUTPUT_FOLDER,
+        filename,
+        mimetype="audio/wav"
+    )
+
+    response.headers["Cache-Control"] = "no-store"
+
+    return response
+
+
+# ==========================================
+# START SERVER
+# ==========================================
+
+if __name__ == "__main__":
+
+    print("Flask server starting on port 5000", flush=True)
+
+    app.run(
+        host="127.0.0.1",
+        port=5000,
+        debug=False,
+        use_reloader=False,
+        threaded=True
+    )

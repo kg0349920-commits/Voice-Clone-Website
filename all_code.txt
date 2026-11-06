@@ -1,0 +1,1114 @@
+﻿
+===== index.html =====
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VoxClone AI â€” Voice Studio</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #07070b;
+            --card: rgba(20, 20, 30, 0.78);
+            --border: rgba(255, 255, 255, 0.10);
+            --text: #ffffff;
+            --muted: #9898a8;
+            --accent: #8b5cf6;
+            --accent2: #06b6d4;
+            --success: #22c55e;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(139, 92, 246, .20), transparent 30%),
+                radial-gradient(circle at 90% 20%, rgba(6, 182, 212, .15), transparent 28%),
+                radial-gradient(circle at 50% 100%, rgba(139, 92, 246, .12), transparent 35%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+            mask-image: linear-gradient(to bottom, black, transparent);
+        }
+
+        header {
+            width: 100%;
+            padding: 22px 6%;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            background: rgba(7, 7, 11, .65);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            max-width: 1250px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--success);
+            box-shadow: 0 0 14px var(--success);
+        }
+
+        main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 70px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border: 1px solid rgba(139,92,246,.35);
+            background: rgba(139,92,246,.10);
+            border-radius: 50px;
+            color: #c4b5fd;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: clamp(42px, 7vw, 78px);
+            line-height: .95;
+            letter-spacing: -4px;
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, #a78bfa, #22d3ee);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .studio {
+            margin-top: 55px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .card {
+            border: 1px solid var(--border);
+            background: var(--card);
+            backdrop-filter: blur(25px);
+            border-radius: 25px;
+            padding: 28px;
+            box-shadow: 0 25px 70px rgba(0,0,0,.25);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .upload {
+            border: 1px dashed rgba(139,92,246,.5);
+            border-radius: 18px;
+            padding: 35px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .upload:hover {
+            background: rgba(139,92,246,.08);
+            transform: translateY(-2px);
+        }
+
+        .upload-icon {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .upload strong {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .upload small {
+            color: var(--muted);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .file-name {
+            margin-top: 15px;
+            padding: 11px;
+            background: rgba(255,255,255,.05);
+            border-radius: 10px;
+            color: #c4b5fd;
+            display: none;
+            font-size: 13px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            resize: vertical;
+            border: 1px solid var(--border);
+            background: rgba(0,0,0,.25);
+            border-radius: 17px;
+            padding: 17px;
+            color: white;
+            outline: none;
+            font-size: 15px;
+            line-height: 1.6;
+            transition: .2s;
+        }
+
+        textarea:focus {
+            border-color: rgba(139,92,246,.65);
+            box-shadow: 0 0 0 4px rgba(139,92,246,.08);
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        select {
+            flex: 1;
+            padding: 14px;
+            border-radius: 13px;
+            background: #11111a;
+            border: 1px solid var(--border);
+            color: white;
+            outline: none;
+        }
+
+        .generate {
+            width: 100%;
+            border: none;
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            background: linear-gradient(100deg, var(--accent), var(--accent2));
+            box-shadow: 0 12px 35px rgba(139,92,246,.25);
+            transition: .25s;
+        }
+
+        .generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 45px rgba(139,92,246,.35);
+        }
+
+        .generate:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result {
+            margin-top: 22px;
+            display: none;
+            border: 1px solid rgba(34,197,94,.25);
+            background: rgba(34,197,94,.05);
+            border-radius: 18px;
+            padding: 18px;
+        }
+
+        .result-title {
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .download {
+            display: inline-block;
+            margin-top: 13px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.08);
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .error {
+            color: #fecaca;
+            background: rgba(239,68,68,.10);
+            border: 1px solid rgba(239,68,68,.2);
+        }
+
+        .loading {
+            color: #ddd6fe;
+            background: rgba(139,92,246,.10);
+            border: 1px solid rgba(139,92,246,.2);
+        }
+
+        .consent {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .consent input {
+            margin-top: 3px;
+            accent-color: var(--accent);
+        }
+
+        .features {
+            margin-top: 24px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .feature {
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(255,255,255,.035);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .feature div {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .feature small {
+            color: var(--muted);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            padding: 30px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+        }
+
+        @media (max-width: 850px) {
+            .studio {
+                grid-template-columns: 1fr;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+        <div class="logo">Vox<span>Clone</span> AI</div>
+
+        <div class="status">
+            <span class="dot"></span>
+            Local AI Studio
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+
+        <div class="badge">
+            LOCAL â€¢ PRIVATE â€¢ AI VOICE STUDIO
+        </div>
+
+        <h1>
+            Your Voice.<br>
+            <span>AI Generated.</span>
+        </h1>
+
+        <p>
+            Generate natural speech from an authorized voice sample
+            using a local AI voice engine.
+        </p>
+
+    </section>
+
+
+    <section class="studio">
+
+        <!-- VOICE SAMPLE -->
+        <div class="card">
+
+            <h2>01 â€” Voice Sample</h2>
+
+            <p class="card-description">
+                Upload your own voice recording or a recording for which
+                you have permission to use.
+            </p>
+
+            <label class="upload" for="voiceFile">
+
+                <div class="upload-icon">ðŸŽ™ï¸</div>
+
+                <strong>
+                    Click to upload voice
+                </strong>
+
+                <small>
+                    WAV / MP3 / M4A
+                </small>
+
+            </label>
+
+            <input
+                type="file"
+                id="voiceFile"
+                accept=".wav,.mp3,.m4a,audio/*"
+            >
+
+            <div id="fileName" class="file-name"></div>
+
+            <div class="consent">
+
+                <input type="checkbox" id="consent">
+
+                <label for="consent">
+                    I confirm that I own this voice or have explicit
+                    permission to use this voice sample.
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- TEXT -->
+        <div class="card">
+
+            <h2>02 â€” Generate Speech</h2>
+
+            <p class="card-description">
+                Enter the text you want the authorized voice to speak.
+            </p>
+
+            <textarea
+                id="text"
+                placeholder="Type something like:
+Hello! Welcome to my AI voice studio."
+            ></textarea>
+
+            <div class="controls">
+
+                <select id="language">
+
+                    <option value="en">
+                        English
+                    </option>
+
+                    <option value="es">
+                        Spanish
+                    </option>
+
+                    <option value="fr">
+                        French
+                    </option>
+
+                    <option value="de">
+                        German
+                    </option>
+
+                    <option value="it">
+                        Italian
+                    </option>
+
+                    <option value="pt">
+                        Portuguese
+                    </option>
+
+                    <option value="zh-cn">
+                        Chinese
+                    </option>
+
+                    <option value="ja">
+                        Japanese
+                    </option>
+
+                    <option value="ko">
+                        Korean
+                    </option>
+
+                </select>
+
+            </div>
+
+            <button
+                class="generate"
+                id="generateBtn"
+                onclick="generateVoice()"
+            >
+                âœ¨ Generate Voice
+            </button>
+
+            <div id="message" class="message"></div>
+
+            <div id="result" class="result">
+
+                <div class="result-title">
+                    âœ“ Voice Generated
+                </div>
+
+                <audio
+                    id="audioPlayer"
+                    controls
+                ></audio>
+
+                <br>
+
+                <a
+                    id="download"
+                    class="download"
+                    download="cloned_voice.wav"
+                >
+                    â¬‡ Download WAV
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="features">
+
+        <div class="feature">
+            <div>ðŸ”’</div>
+            <small>Local Processing</small>
+        </div>
+
+        <div class="feature">
+            <div>âš¡</div>
+            <small>AI Voice Synthesis</small>
+        </div>
+
+        <div class="feature">
+            <div>ðŸŽ§</div>
+            <small>WAV Output</small>
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+    VoxClone AI â€¢ Local Voice Studio
+</footer>
+
+
+<script>
+
+    let selectedFile = null;
+
+    /*
+        Show selected voice file.
+    */
+    document.getElementById("voiceFile").addEventListener("change", function () {
+
+        selectedFile = this.files[0];
+
+        let fileName = document.getElementById("fileName");
+
+        if (selectedFile) {
+
+            fileName.style.display = "block";
+
+            fileName.innerText =
+                "Selected: " + selectedFile.name;
+        }
+
+    });
+
+
+    /*
+        Show a message to the user.
+    */
+    function showMessage(text, type) {
+
+        let message = document.getElementById("message");
+
+        message.style.display = "block";
+
+        message.className = "message " + type;
+
+        message.innerText = text;
+    }
+
+
+    /*
+        Generate cloned speech.
+    */
+    async function generateVoice() {
+
+        let text = document.getElementById("text").value.trim();
+
+        let language =
+            document.getElementById("language").value;
+
+        let consent =
+            document.getElementById("consent").checked;
+
+        let button =
+            document.getElementById("generateBtn");
+
+        let result =
+            document.getElementById("result");
+
+        if (!selectedFile) {
+
+            showMessage(
+                "Please upload a voice sample first.",
+                "error"
+            );
+
+            return;
+        }
+
+        if (!consent) {
+
+            showMessage(
+                "Please confirm that you have permission to use this voice.",
+                "error"
+            );
+
+            return;
+        }
+
+        if (!text) {
+
+            showMessage(
+                "Please enter some text.",
+                "error"
+            );
+
+            return;
+        }
+
+        button.disabled = true;
+
+        button.innerText =
+            "â³ Generating... Please wait";
+
+        result.style.display = "none";
+
+        showMessage(
+            "AI is generating your voice locally. The first generation may take longer because the model needs to load.",
+            "loading"
+        );
+
+        try {
+
+            let formData = new FormData();
+
+            formData.append(
+                "voice",
+                selectedFile
+            );
+
+            formData.append(
+                "text",
+                text
+            );
+
+            formData.append(
+                "language",
+                language
+            );
+
+
+            let response = await fetch(
+                "/api/clone",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+            let data = await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error || "Generation failed."
+                );
+
+            }
+
+
+            let audioPlayer =
+                document.getElementById("audioPlayer");
+
+            let download =
+                document.getElementById("download");
+
+
+            audioPlayer.src =
+                data.audio_url +
+                "?t=" +
+                Date.now();
+
+
+            download.href =
+                data.audio_url;
+
+
+            result.style.display =
+                "block";
+
+
+            showMessage(
+                "Voice generated successfully.",
+                "loading"
+            );
+
+        }
+
+        catch (error) {
+
+            showMessage(
+                error.message,
+                "error"
+            );
+
+        }
+
+        finally {
+
+            button.disabled = false;
+
+            button.innerText =
+                "âœ¨ Generate Voice";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
+```
+
+===== server.py =====
+
+
+from flask import Flask, request, jsonify, send_from_directory
+from TTS.api import TTS
+
+import os
+import uuid
+import shutil
+
+app = Flask(__name__)
+
+# --------------------------------------------------
+# FOLDERS
+# --------------------------------------------------
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+VOICE_FOLDER = os.path.join(
+    BASE_DIR,
+    "voices"
+)
+
+OUTPUT_FOLDER = os.path.join(
+    BASE_DIR,
+    "outputs"
+)
+
+os.makedirs(VOICE_FOLDER, exist_ok=True)
+os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+
+# --------------------------------------------------
+# XTTS V2 MODEL
+# --------------------------------------------------
+
+MODEL_NAME = "tts_models/multilingual/multi-dataset/xtts_v2"
+
+print("")
+print("========================================")
+print("      VoxClone AI - Starting")
+print("========================================")
+print("")
+
+print("Loading XTTS-v2 model...")
+
+try:
+
+    import torch
+
+    if torch.cuda.is_available():
+
+        DEVICE = "cuda"
+
+        print("NVIDIA GPU detected.")
+
+    else:
+
+        DEVICE = "cpu"
+
+        print("Running on CPU.")
+
+    tts = TTS(MODEL_NAME).to(DEVICE)
+
+    print("XTTS-v2 loaded successfully.")
+
+except Exception as error:
+
+    print("")
+    print("MODEL ERROR:")
+    print(error)
+    print("")
+    tts = None
+
+
+# --------------------------------------------------
+# HOME PAGE
+# --------------------------------------------------
+
+@app.route("/")
+def home():
+
+    return send_from_directory(
+        BASE_DIR,
+        "index.html"
+    )
+
+
+# --------------------------------------------------
+# GENERATED AUDIO
+# --------------------------------------------------
+
+@app.route("/outputs/<filename>")
+def output_audio(filename):
+
+    return send_from_directory(
+        OUTPUT_FOLDER,
+        filename
+    )
+
+
+# --------------------------------------------------
+# VOICE CLONING API
+# --------------------------------------------------
+
+@app.route("/api/clone", methods=["POST"])
+def clone_voice():
+
+    if tts is None:
+
+        return jsonify({
+            "error":
+            "The AI model could not load. Check the terminal for the error."
+        }), 500
+
+
+    # ----------------------------------------------
+    # GET FORM DATA
+    # ----------------------------------------------
+
+    text = request.form.get(
+        "text",
+        ""
+    ).strip()
+
+
+    language = request.form.get(
+        "language",
+        "en"
+    ).strip()
+
+
+    voice_file = request.files.get(
+        "voice"
+    )
+
+
+    # ----------------------------------------------
+    # VALIDATION
+    # ----------------------------------------------
+
+    if not text:
+
+        return jsonify({
+            "error":
+            "Please enter some text."
+        }), 400
+
+
+    if len(text) > 3000:
+
+        return jsonify({
+            "error":
+            "Please keep the text under 3000 characters."
+        }), 400
+
+
+    if voice_file is None:
+
+        return jsonify({
+            "error":
+            "Please upload a voice sample."
+        }), 400
+
+
+    # ----------------------------------------------
+    # CHECK FILE
+    # ----------------------------------------------
+
+    original_name = voice_file.filename.lower()
+
+    allowed_extensions = [
+        ".wav",
+        ".mp3",
+        ".m4a"
+    ]
+
+    extension = os.path.splitext(
+        original_name
+    )[1]
+
+
+    if extension not in allowed_extensions:
+
+        return jsonify({
+            "error":
+            "Please upload WAV, MP3, or M4A audio."
+        }), 400
+
+
+    # ----------------------------------------------
+    # SAVE REFERENCE AUDIO
+    # ----------------------------------------------
+
+    reference_name = (
+        "reference_" +
+        uuid.uuid4().hex +
+        extension
+    )
+
+    reference_path = os.path.join(
+        VOICE_FOLDER,
+        reference_name
+    )
+
+
+    voice_file.save(
+        reference_path
+    )
+
+
+    # ----------------------------------------------
+    # OUTPUT FILE
+    # ----------------------------------------------
+
+    output_name = (
+        "voice_" +
+        uuid.uuid4().hex +
+        ".wav"
+    )
+
+    output_path = os.path.join(
+        OUTPUT_FOLDER,
+        output_name
+    )
+
+
+    try:
+
+        print("")
+        print("----------------------------------------")
+        print("Generating voice...")
+        print("Language:", language)
+        print("Reference:", reference_name)
+        print("----------------------------------------")
+
+
+        # ------------------------------------------
+        # XTTS VOICE CLONING
+        # ------------------------------------------
+
+        tts.tts_to_file(
+
+            text=text,
+
+            speaker_wav=reference_path,
+
+            language=language,
+
+            file_path=output_path,
+
+            split_sentences=True
+
+        )
+
+
+        print("Generation complete.")
+
+
+        return jsonify({
+
+            "success": True,
+
+            "audio_url":
+                "/outputs/" + output_name
+
+        })
+
+
+    except Exception as error:
+
+        print("")
+        print("GENERATION ERROR:")
+        print(error)
+        print("")
+
+
+        return jsonify({
+
+            "error":
+                "Voice generation failed: " +
+                str(error)
+
+        }), 500
+
+
+    finally:
+
+        # ------------------------------------------
+        # REMOVE TEMPORARY REFERENCE
+        # ------------------------------------------
+
+        try:
+
+            if os.path.exists(reference_path):
+
+                os.remove(
+                    reference_path
+                )
+
+        except Exception:
+
+            pass
+
+
+# --------------------------------------------------
+# START SERVER
+# --------------------------------------------------
+
+if __name__ == "__main__":
+
+    print("")
+    print("========================================")
+    print("Website:")
+    print("http://127.0.0.1:5000")
+    print("========================================")
+    print("")
+
+    app.run(
+        host="127.0.0.1",
+        port=5000,
+        debug=False
+    )
+
+
+===== requirements.txt =====
+
