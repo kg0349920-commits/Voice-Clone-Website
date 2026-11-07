@@ -8,3 +8,9 @@ voices/uploads/
 
 .env
 .venv/
+
+*.wav
+*.mp3
+*.m4a
+outputs/
+voices/outputs/
