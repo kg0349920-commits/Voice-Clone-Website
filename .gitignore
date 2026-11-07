@@ -14,3 +14,9 @@ voices/uploads/
 *.m4a
 outputs/
 voices/outputs/
+
+*.wav
+*.mp3
+*.m4a
+outputs/
+voices/outputs/
