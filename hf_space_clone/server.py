@@ -1,4 +1,4 @@
-﻿import os
+import os
 import re
 import uuid
 import time
@@ -19,12 +19,34 @@ PITCH_STEPS = 0
 TREBLE_CUT_HZ = 8000
 
 
-# QUALITY-PATCH: clearer + fuller voice (EQ chain). Tune the numbers below.
-BODY_DB = 3.0        # fullness at ~150 Hz (voice thin lage to 4.0 karein)
+# QUALITY-PATCH + CONTROLS-PATCH: EQ chain with website controls (speed, pitch, fullness, clarity, expression)
+BODY_DB = 3.0        # default fullness at ~150 Hz
 MUD_DB = -2.0        # boxy/muddy awaaz kam karta hai (~320 Hz)
-PRESENCE_DB = 3.0    # clarity / samajh aana (~3.2 kHz). Zyada sharp lage to 2.0
+PRESENCE_DB = 3.0    # default clarity (~3.2 kHz)
 AIR_DB = 1.0         # halki chamak (~9 kHz)
-VOICE_PITCH_STEPS = 0.0   # 0 = original pitch. Thori gehri chahiye to -0.5 (quality thori kam hoti hai)
+VOICE_PITCH_STEPS = 0.0   # default pitch (semitones). Website isay badal sakti hai
+
+
+def _form_float(name, default, lo, hi):
+    """Reads a number sent by the website. Falls back to the default if missing/invalid."""
+    try:
+        from flask import request as _rq
+        raw = _rq.form.get(name)
+        if raw is None or str(raw).strip() == "":
+            return default
+        v = float(raw)
+        if v != v:
+            return default
+        return max(lo, min(hi, v))
+    except Exception:
+        return default
+
+
+def gen_settings():
+    s = dict(GEN_SETTINGS)
+    s["speed"] = _form_float("speed", s.get("speed", 1.0), 0.7, 1.4)
+    s["temperature"] = _form_float("temperature", s.get("temperature", 0.6), 0.3, 0.9)
+    return s
 
 
 def _eq_sos(kind, f0, gain_db, q, fs):
@@ -61,23 +83,21 @@ def _eq_sos(kind, f0, gain_db, q, fs):
 def warm_voice(wav):
     import numpy as _np
     from scipy.signal import butter as _butter, sosfilt as _sosfilt
-    y = _np.asarray(wav, dtype=_np.float64)
-    if VOICE_PITCH_STEPS:
-        import librosa as _librosa
-        y = _librosa.effects.pitch_shift(y.astype(_np.float32), sr=SR, n_steps=VOICE_PITCH_STEPS).astype(_np.float64)
+    pitch = _form_float("pitch", VOICE_PITCH_STEPS, -4.0, 4.0)
+    body = _form_float("body", BODY_DB, 0.0, 8.0)
+    clarity = _form_float("clarity", PRESENCE_DB, 0.0, 8.0)
 
-    # 1. rumble hatao
+    y = _np.asarray(wav, dtype=_np.float64)
+    if abs(pitch) > 0.01:
+        import librosa as _librosa
+        y = _librosa.effects.pitch_shift(y.astype(_np.float32), sr=SR, n_steps=pitch).astype(_np.float64)
+
     y = _sosfilt(_butter(2, 70, btype="highpass", fs=SR, output="sos"), y)
-    # 2. body / fullness (patli awaaz ka ilaaj)
-    y = _sosfilt(_eq_sos("lowshelf", 150, BODY_DB, 0.7, SR), y)
-    # 3. muddy hissa kam karo
+    y = _sosfilt(_eq_sos("lowshelf", 150, body, 0.7, SR), y)
     y = _sosfilt(_eq_sos("peak", 320, MUD_DB, 1.0, SR), y)
-    # 4. clarity / presence
-    y = _sosfilt(_eq_sos("peak", 3200, PRESENCE_DB, 0.9, SR), y)
-    # 5. halki air
+    y = _sosfilt(_eq_sos("peak", 3200, clarity, 0.9, SR), y)
     y = _sosfilt(_eq_sos("highshelf", 9000, AIR_DB, 0.7, SR), y)
 
-    # 6. awaaz barabar karo aur nazuk soft-limit
     rms = float(_np.sqrt(_np.mean(y ** 2))) or 1e-9
     y = y * (0.12 / rms)
     y = _np.tanh(y * 1.25) / _np.tanh(1.25)
@@ -436,7 +456,7 @@ def clone_voice():
                     gpt_cond_latent=gpt_cond_latent,
                     speaker_embedding=speaker_embedding,
                     enable_text_splitting=False,
-                    **GEN_SETTINGS
+                    **gen_settings()
                 )
 
             pieces.append(tidy_chunk(out["wav"]))
@@ -526,7 +546,7 @@ def clone_voice():
                     gpt_cond_latent=gpt_cond_latent,
                     speaker_embedding=speaker_embedding,
                     enable_text_splitting=False,
-                    **GEN_SETTINGS,
+                    **gen_settings(),
                 )
             pieces.append(tidy_chunk(out["wav"]))
             if i < len(chunks):

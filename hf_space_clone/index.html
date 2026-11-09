@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -79,6 +79,19 @@ audio{width:100%;height:42px}
 .chip:hover{border-color:var(--gold2);background:rgba(214,169,78,.08)}
 .chip[aria-pressed=true]{border-color:var(--gold2);background:rgba(214,169,78,.18);box-shadow:0 0 0 1px var(--gold2) inset}
 .chip img{width:24px;height:auto;border-radius:3px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
+details.set{border:1px solid rgba(214,169,78,.25);border-radius:14px;background:rgba(0,0,0,.28);padding:0 16px}
+details.set summary{cursor:pointer;padding:14px 0;color:var(--gold2);font-weight:700;font-size:13px;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.set summary::-webkit-details-marker{display:none}
+details.set summary:after{content:"+";font-size:20px;line-height:1}
+details.set[open] summary:after{content:"\2212"}
+.presets{display:flex;gap:8px;flex-wrap:wrap;margin:2px 0 16px}
+.preset{padding:7px 13px;border-radius:99px;border:1px solid rgba(214,169,78,.35);background:transparent;color:var(--text);font:600 13px var(--body);cursor:pointer}
+.preset:hover{background:rgba(214,169,78,.14);border-color:var(--gold2)}
+.ctl{margin-bottom:14px}
+.ctl .top{display:flex;justify-content:space-between;gap:10px;font-size:14px;margin-bottom:4px}
+.ctl .top b{color:var(--gold2);font-variant-numeric:tabular-nums;font-weight:700}
+.ctl input[type=range]{width:100%;accent-color:#d6a94e}
+.ctl small{color:var(--muted);font-size:12.5px}
 .msg{display:none;margin-top:16px;padding:12px 14px;border-radius:10px;font-size:14px}
 .msg.error{display:block;color:var(--red);border:1px solid rgba(255,100,100,.25);background:rgba(255,60,60,.07)}
 .msg.ok{display:block;color:var(--green);border:1px solid rgba(112,190,131,.25);background:rgba(60,130,75,.07)}
@@ -133,7 +146,17 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:26px 0 34px;text-align
       <div class="g">
         <label class="lab" for="text">3. Your script</label>
         <textarea id="text" placeholder="Type the text you want spoken. Short sentences sound best."></textarea>
-        <div class="meta"><span id="est">Short text finishes faster on this server.</span><span class="cnt" id="cnt">0 / 500</span></div>
+        <div class="meta"><span id="est">Short text finishes faster on this server.</span><span class="cnt" id="cnt">0 / 1000</span></div>
+      </div>
+
+      <div class="g">
+        <details class="set" id="setbox">
+          <summary>4. Voice settings (optional)</summary>
+          <div class="presets" id="presets"></div>
+          <div id="ctl"></div>
+          <button type="button" class="preset" id="resetset">Reset to default</button>
+          <div style="height:16px"></div>
+        </details>
       </div>
 
       <label class="consent"><input type="checkbox" id="consent"><span>This is my own voice, or I have the speaker's permission to use it. I will not use it to impersonate or mislead anyone.</span></label>
@@ -175,8 +198,8 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:26px 0 34px;text-align
 <script>
 (function(){
   "use strict";
-  var API="";            // same address as this page (Modal, Colab tunnel or 127.0.0.1:5000)
-  var MAX=500;          // character limit (also set MAX_TEXT_CHARS in server.py)
+  var API = "";            // same address as this page (Modal, Colab tunnel or 127.0.0.1:5000)
+  var MAX=1000;          // character limit (also set MAX_TEXT_CHARS in server.py)
   var OK=[".wav",".mp3",".m4a"];
   var $=function(i){return document.getElementById(i)};
   var file=null,prevUrl=null,outUrl=null,tm=null;
@@ -211,6 +234,43 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:26px 0 34px;text-align
     });
     chipBox.appendChild(b);
   });
+
+  var SET=[
+    {id:"speed",lab:"Speed",min:0.7,max:1.4,step:0.05,def:1,hint:"Kam = dheema, zyada = tez",fmt:function(v){return v.toFixed(2)+"x"}},
+    {id:"pitch",lab:"Pitch",min:-4,max:4,step:0.5,def:0,hint:"Minus = gehri awaaz, plus = patli/high. Zyada karne par quality kam hoti hai",fmt:function(v){return (v>0?"+":"")+v.toFixed(1)+" st"}},
+    {id:"body",lab:"Fullness",min:0,max:8,step:0.5,def:3,hint:"Awaaz mein bhaari pan (bass)",fmt:function(v){return v.toFixed(1)+" dB"}},
+    {id:"clarity",lab:"Clarity",min:0,max:8,step:0.5,def:3,hint:"Lafz saaf sunai dene ke liye",fmt:function(v){return v.toFixed(1)+" dB"}},
+    {id:"temperature",lab:"Expression",min:0.3,max:0.9,step:0.05,def:0.6,hint:"Kam = stable aur saaf, zyada = zyada jazbaati",fmt:function(v){return v.toFixed(2)}}
+  ];
+  var PRESETS={
+    "Natural":{speed:1,pitch:0,body:3,clarity:3,temperature:0.6},
+    "Deep and full":{speed:0.95,pitch:-1.5,body:5,clarity:3.5,temperature:0.55},
+    "Clear":{speed:1,pitch:0,body:2,clarity:5,temperature:0.55},
+    "Fast":{speed:1.2,pitch:0,body:3,clarity:3,temperature:0.6}
+  };
+  var vals={};
+  SET.forEach(function(c){vals[c.id]=c.def});
+  try{var saved=JSON.parse(localStorage.getItem("vc_settings")||"{}");SET.forEach(function(c){var v=Number(saved[c.id]);if(isFinite(v)&&saved[c.id]!==undefined&&v>=c.min&&v<=c.max)vals[c.id]=v})}catch(e){}
+  var rows={};
+  SET.forEach(function(c){
+    var d=document.createElement("div");d.className="ctl";
+    d.innerHTML='<div class="top"><label for="s_'+c.id+'">'+c.lab+'</label><b id="v_'+c.id+'"></b></div><input type="range" id="s_'+c.id+'" min="'+c.min+'" max="'+c.max+'" step="'+c.step+'"><small>'+c.hint+'</small>';
+    $("ctl").appendChild(d);
+    var inp=d.querySelector("input"),out=d.querySelector("b");
+    rows[c.id]={inp:inp,out:out,c:c};
+    inp.addEventListener("input",function(){vals[c.id]=Number(inp.value);out.textContent=c.fmt(vals[c.id]);saveSet()});
+  });
+  function saveSet(){try{localStorage.setItem("vc_settings",JSON.stringify(vals))}catch(e){}}
+  function showSet(){SET.forEach(function(c){var r=rows[c.id];r.inp.value=vals[c.id];r.out.textContent=c.fmt(vals[c.id])})}
+  function applyPreset(o){SET.forEach(function(c){vals[c.id]=o[c.id]});showSet();saveSet()}
+  Object.keys(PRESETS).forEach(function(name){
+    var b=document.createElement("button");b.type="button";b.className="preset";b.textContent=name;
+    b.addEventListener("click",function(){applyPreset(PRESETS[name])});
+    $("presets").appendChild(b);
+  });
+  $("resetset").addEventListener("click",function(){applyPreset(PRESETS["Natural"])});
+  showSet();
+  function appendSettings(fd){SET.forEach(function(c){fd.append(c.id,String(vals[c.id]))})}
 
   function pick(f){
     clear();if(!f)return;
@@ -278,9 +338,9 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:26px 0 34px;text-align
     if(text.length>MAX)return say("Keep the text under "+MAX+" characters.","error");
     if(!$("consent").checked)return say("Confirm that you own this voice or have permission to use it.","error");
 
-    var fd=new FormData();fd.append("voice",file);fd.append("text",text);fd.append("language",$("lang").value);
+    var fd=new FormData();fd.append("voice",file);fd.append("text",text);fd.append("language",$("lang").value);appendSettings(fd);
     busy(true,text.length);
-    var ac=new AbortController(),to=setTimeout(function(){ac.abort()},600*60*1000);
+    var ac=new AbortController(),to=setTimeout(function(){ac.abort()},60*60*1000);
 
     fetch(API+"/api/clone",{method:"POST",body:fd,signal:ac.signal})
     .then(function(r){return r.text().then(function(raw){
