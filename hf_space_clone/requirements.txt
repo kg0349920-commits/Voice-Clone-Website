@@ -1,0 +1,12 @@
+torch
+torchaudio
+torchcodec
+six
+coqui-tts
+flask
+flask-cors
+gunicorn
+soundfile
+librosa
+scipy
+num2words

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#070605">
+<meta name="author" content="Wajahat Abbas">
+<title>VoxClone AI | VIP Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070605;--gold:#d6a94e;--gold2:#ffe6a6;--text:#f8f2e6;--muted:#a69b88;--line:rgba(214,169,78,.25);--green:#9fe0ad;--red:#ff9d9d;
+--disp:Orbitron,"Segoe UI",sans-serif;--body:"DM Sans","Segoe UI",system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:radial-gradient(ellipse at 50% -10%,rgba(190,132,37,.22),transparent 50%),var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:54px 54px;mask-image:linear-gradient(#000,transparent 85%)}
+#particles{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.p{position:absolute;bottom:-10px;width:3px;height:3px;border-radius:50%;background:var(--gold2);box-shadow:0 0 12px var(--gold);opacity:0;animation:up linear infinite}
+@keyframes up{0%{transform:translateY(0);opacity:0}15%{opacity:.6}100%{transform:translateY(-110vh);opacity:0}}
+.wrap{width:min(1080px,92%);margin:auto;position:relative;z-index:1}
+nav{height:78px;display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{font-family:var(--disp);font-weight:800;font-size:19px;color:var(--gold2);letter-spacing:1px}
+.logo b{color:#fff}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:rgba(214,169,78,.07);color:var(--gold2);padding:7px 13px;border-radius:30px;font-size:12px;font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:#777;flex:none}
+.pill[data-s=wait] .dot{background:#e6a817;animation:blink 1.1s infinite}
+.pill[data-s=ok] .dot{background:#6ddc8b}
+.pill[data-s=down] .dot{background:#ff6b6b}
+@keyframes blink{50%{opacity:.3}}
+.hero{text-align:center;padding:62px 0 8px}
+h1{font-size:clamp(34px,6.2vw,66px);line-height:1.08;letter-spacing:-2px;font-weight:700;margin-bottom:16px}
+.gt{background:linear-gradient(100deg,#a97727,#fff0bd 50%,#d4a348);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:600px;margin:auto;color:var(--muted);font-size:16px}
+.bars{height:92px;display:flex;align-items:center;justify-content:center;gap:5px;margin:20px 0 26px}
+.bars i{width:4px;height:12px;border-radius:9px;background:linear-gradient(to top,#805319,#d6a94e,#fff0bd);animation:w 2.8s ease-in-out infinite alternate}
+.bars i:nth-child(2n){animation-delay:-.5s}.bars i:nth-child(3n){animation-delay:-1s}.bars i:nth-child(5n){animation-delay:-1.6s}.bars i:nth-child(7n){animation-delay:-.2s}
+body.busy .bars i{animation-duration:.7s}
+@keyframes w{0%{height:8px;opacity:.45}100%{height:66px;opacity:1}}
+.card{max-width:800px;margin:0 auto 48px;padding:clamp(20px,4vw,38px);border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,.015));backdrop-filter:blur(20px);box-shadow:0 25px 80px rgba(0,0,0,.55)}
+.card h2{font-family:var(--disp);font-size:20px;margin-bottom:6px}
+.card>p{color:var(--muted);font-size:14px;margin-bottom:26px}
+.g{margin-bottom:22px}
+.lab{display:block;margin-bottom:10px;color:var(--gold2);font-weight:700;font-size:13px}
+.drop{display:block;width:100%;border:1.5px dashed rgba(214,169,78,.45);border-radius:16px;padding:24px 16px;text-align:center;background:rgba(214,169,78,.03);cursor:pointer;color:inherit;font:inherit;transition:.25s}
+.drop:hover,.drop.over{background:rgba(214,169,78,.1);border-color:var(--gold2)}
+.drop svg{margin-bottom:8px}
+.drop strong{display:block;font-size:15px;overflow-wrap:anywhere}
+.drop small{color:var(--muted);font-size:13px}
+select,textarea{width:100%;color:#fff;background:rgba(0,0,0,.45);border:1px solid rgba(214,169,78,.28);border-radius:12px;padding:13px 14px;font:15px var(--body)}
+select option{background:#17130c}
+textarea{min-height:150px;resize:vertical;line-height:1.7}
+.meta{display:flex;justify-content:space-between;gap:10px;margin-top:8px;font-size:13px;color:var(--muted)}
+.cnt{color:var(--gold2);font-variant-numeric:tabular-nums}.cnt.over{color:var(--red)}
+.consent{display:flex;gap:11px;align-items:flex-start;color:var(--muted);font-size:13.5px;margin-bottom:22px;cursor:pointer}
+.consent input{accent-color:var(--gold);width:18px;height:18px;margin-top:2px;flex:none}
+.btn{width:100%;border:0;border-radius:13px;padding:17px;font:800 15px var(--body);letter-spacing:1px;color:#1a1206;cursor:pointer;background:linear-gradient(110deg,#a97724,#ffe5a2,#c18c32);box-shadow:0 8px 28px rgba(214,169,78,.2);transition:.2s}
+.btn:hover:not(:disabled){transform:translateY(-2px);filter:brightness(1.06)}
+.btn:disabled{opacity:.6;cursor:wait}
+:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+.work,.res{display:none;margin-top:20px;border-radius:16px;padding:22px;text-align:center}
+.work{border:1px solid var(--line);background:rgba(214,169,78,.045)}
+.work.show,.res.show{display:block}
+.spin{width:44px;height:44px;margin:0 auto 12px;border:3px solid rgba(214,169,78,.18);border-top-color:var(--gold2);border-radius:50%;animation:s 1.1s linear infinite}
+@keyframes s{to{transform:rotate(360deg)}}
+.work h3{color:var(--gold2);font-size:16px;margin:12px 0 4px}.work p{color:var(--muted);font-size:13.5px}
+.pct{font-family:var(--disp);font-weight:800;font-size:46px;line-height:1;color:var(--gold2);font-variant-numeric:tabular-nums}
+.bar{height:12px;border-radius:99px;background:rgba(214,169,78,.15);overflow:hidden;margin-top:14px}
+.bar i{display:block;height:100%;width:1%;border-radius:99px;background:linear-gradient(90deg,#a97724,#ffe5a2);transition:width .3s ease}
+.res{border:1px solid rgba(112,190,131,.35);background:rgba(60,130,75,.08);text-align:left}
+.res h3{color:var(--green);font-size:16px;margin-bottom:10px}
+audio{width:100%;height:42px}
+.row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.dl,.again{display:inline-block;text-decoration:none;border-radius:10px;padding:11px 18px;font:700 14px var(--body);cursor:pointer;border:0}
+.dl{color:#171006;background:linear-gradient(100deg,#b88732,#ffe5a2)}
+.again{color:var(--gold2);background:transparent;border:1px solid var(--line)}
+.langs{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px}
+.chip{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:11px;border:1px solid rgba(214,169,78,.25);background:rgba(0,0,0,.35);color:var(--text);font:600 14px var(--body);cursor:pointer;text-align:left;transition:.15s}
+.chip:hover{border-color:var(--gold2);background:rgba(214,169,78,.08)}
+.chip[aria-pressed=true]{border-color:var(--gold2);background:rgba(214,169,78,.18);box-shadow:0 0 0 1px var(--gold2) inset}
+.chip img{width:24px;height:auto;border-radius:3px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.15)}
+.msg{display:none;margin-top:16px;padding:12px 14px;border-radius:10px;font-size:14px}
+.msg.error{display:block;color:var(--red);border:1px solid rgba(255,100,100,.25);background:rgba(255,60,60,.07)}
+.msg.ok{display:block;color:var(--green);border:1px solid rgba(112,190,131,.25);background:rgba(60,130,75,.07)}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:0 auto 56px}
+.f{padding:22px 18px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:16px}
+.f h3{font-size:15px;margin-bottom:6px;color:var(--gold2)}.f p{color:var(--muted);font-size:13.5px}
+footer{border-top:1px solid rgba(255,255,255,.08);padding:26px 0 34px;text-align:center;color:var(--muted);font-size:13px}
+.owner{display:inline-block;margin-bottom:8px;padding:9px 18px;border:1px solid var(--line);border-radius:30px;background:rgba(214,169,78,.07);color:var(--text);font-size:14px}
+.owner b{font-family:var(--disp);color:var(--gold2);letter-spacing:.5px}
+@media(max-width:700px){.feat{grid-template-columns:1fr}h1{letter-spacing:-1px}.logo{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="particles" aria-hidden="true"></div>
+<div class="wrap">
+  <nav>
+    <div class="logo">VOXCLONE <b>AI</b></div>
+    <span class="pill" id="st" data-s="wait" role="status"><span class="dot"></span><span id="stt">Checking server...</span></span>
+  </nav>
+
+  <header class="hero">
+    <h1>Give your words<br><span class="gt">a voice of their own.</span></h1>
+    <p>Upload a short, clear recording of a voice you have permission to use, write your script, and get the speech back as a WAV file.</p>
+  </header>
+
+  <div class="bars" id="bars" aria-hidden="true"></div>
+
+  <main>
+    <section class="card">
+      <h2>Voice Cloning Studio</h2>
+      <p>Three steps: add a sample, write the script, generate.</p>
+
+      <div class="g">
+        <span class="lab">1. Voice sample</span>
+        <input type="file" id="voice" accept=".wav,.mp3,.m4a,audio/wav,audio/mpeg,audio/mp4" hidden>
+        <button type="button" class="drop" id="drop">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#ffe6a6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+          <strong id="dt">Drop your audio here or browse files</strong>
+          <small id="ds">WAV, MP3 or M4A. 5 to 30 seconds of clear speech, no music.</small>
+        </button>
+        <audio id="prev" controls hidden style="margin-top:12px"></audio>
+      </div>
+
+      <div class="g">
+        <span class="lab" id="langlab">2. Language of your script</span>
+        <input type="hidden" id="lang" value="en">
+        <div class="langs" id="langs" role="group" aria-labelledby="langlab"></div>
+        <div class="meta"><span>17 languages supported by the XTTS-v2 voice model. Urdu is not one of them.</span></div>
+      </div>
+
+      <div class="g">
+        <label class="lab" for="text">3. Your script</label>
+        <textarea id="text" placeholder="Type the text you want spoken. Short sentences sound best."></textarea>
+        <div class="meta"><span id="est">Short text finishes faster on this server.</span><span class="cnt" id="cnt">0 / 500</span></div>
+      </div>
+
+      <label class="consent"><input type="checkbox" id="consent"><span>This is my own voice, or I have the speaker's permission to use it. I will not use it to impersonate or mislead anyone.</span></label>
+
+      <button class="btn" id="go" type="button">GENERATE VOICE</button>
+
+      <div class="work" id="work" aria-live="polite">
+        <div class="pct" id="pct">1%</div>
+        <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="1" id="barwrap"><i id="fill"></i></div>
+        <h3 id="wh">Preparing your voice sample...</h3>
+        <p id="wt">0:00 elapsed. This runs on a CPU, so a short line can take a few minutes. Keep this page open.</p>
+      </div>
+
+      <div class="res" id="res">
+        <h3>Your audio is ready</h3>
+        <audio id="out" controls></audio>
+        <div class="row">
+          <a class="dl" id="dl" href="#" download="voxclone.wav">Download WAV</a>
+          <button class="again" id="again" type="button">Make another</button>
+        </div>
+      </div>
+
+      <div class="msg" id="msg" role="alert"></div>
+    </section>
+
+    <section class="feat">
+      <article class="f"><h3>Your own voice profile</h3><p>Works from one clean recording that you own or have permission to use.</p></article>
+      <article class="f"><h3>17 languages</h3><p>Speak English, Hindi, Arabic, Spanish, French and more with the same voice.</p></article>
+      <article class="f"><h3>Play and download</h3><p>Listen right here, then save the result as a WAV file.</p></article>
+    </section>
+  </main>
+
+  <footer>
+    <div class="owner">Owner and developer: <b>Wajahat Abbas</b></div>
+    <div>VoxClone AI VIP Studio. Use voice recordings responsibly and only with the speaker's permission.</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var API="";            // same address as this page (Modal, Colab tunnel or 127.0.0.1:5000)
+  var MAX=500;          // character limit (also set MAX_TEXT_CHARS in server.py)
+  var OK=[".wav",".mp3",".m4a"];
+  var $=function(i){return document.getElementById(i)};
+  var file=null,prevUrl=null,outUrl=null,tm=null;
+
+  var bars=$("bars");for(var i=0;i<34;i++)bars.appendChild(document.createElement("i"));
+  var pl=$("particles");
+  for(var k=0;k<22;k++){var s=document.createElement("span");s.className="p";s.style.left=Math.random()*100+"%";s.style.animationDuration=(12+Math.random()*16)+"s";s.style.animationDelay=(-Math.random()*24)+"s";pl.appendChild(s)}
+
+  function say(t,kind){var m=$("msg");m.textContent=t;m.className="msg "+kind}
+  function clear(){$("msg").className="msg"}
+  function mmss(s){s=Math.round(s);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+
+  /* server status (this also wakes the server) */
+  fetch(API+"/health",{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){
+    if(d&&d.status==="ok"){$("st").dataset.s="ok";$("stt").textContent="Server ready ("+String(d.device||"cpu").toUpperCase()+")"}else throw 0;
+  }).catch(function(){$("st").dataset.s="down";$("stt").textContent="Server not reachable. Reload shortly."});
+  setTimeout(function(){if($("st").dataset.s==="wait")$("stt").textContent="Waking up the server. This can take a minute..."},4000);
+
+  var LANGS=[["en","English","us"],["hi","Hindi","in"],["ar","Arabic","sa"],["es","Spanish","es"],["fr","French","fr"],["de","German","de"],["it","Italian","it"],["pt","Portuguese","pt"],["pl","Polish","pl"],["tr","Turkish","tr"],["ru","Russian","ru"],["nl","Dutch","nl"],["cs","Czech","cz"],["zh-cn","Chinese","cn"],["ja","Japanese","jp"],["ko","Korean","kr"],["hu","Hungarian","hu"]];
+  var chipBox=$("langs");
+  LANGS.forEach(function(l){
+    var b=document.createElement("button");b.type="button";b.className="chip";b.dataset.code=l[0];
+    b.setAttribute("aria-pressed",l[0]==="en"?"true":"false");
+    var im=document.createElement("img");im.alt="";im.loading="lazy";
+    im.src="https://flagcdn.com/w40/"+l[2]+".png";im.srcset="https://flagcdn.com/w80/"+l[2]+".png 2x";
+    im.onerror=function(){im.remove()};
+    var t=document.createElement("span");t.textContent=l[1];
+    b.appendChild(im);b.appendChild(t);
+    b.addEventListener("click",function(){
+      $("lang").value=l[0];
+      chipBox.querySelectorAll(".chip").forEach(function(c){c.setAttribute("aria-pressed",c===b?"true":"false")});
+    });
+    chipBox.appendChild(b);
+  });
+
+  function pick(f){
+    clear();if(!f)return;
+    var e=(f.name.match(/\.[^.]+$/)||[""])[0].toLowerCase();
+    if(OK.indexOf(e)<0){say("Use a WAV, MP3 or M4A file.","error");return}
+    if(f.size>20*1024*1024){say("That file is over 20 MB. Use a shorter sample.","error");return}
+    file=f;$("dt").textContent=f.name;$("ds").textContent=(f.size/1048576).toFixed(1)+" MB. Click to choose a different file.";
+    if(prevUrl)URL.revokeObjectURL(prevUrl);prevUrl=URL.createObjectURL(f);$("prev").src=prevUrl;$("prev").hidden=false;
+  }
+  $("drop").addEventListener("click",function(){$("voice").click()});
+  $("voice").addEventListener("change",function(){pick(this.files[0])});
+  ["dragenter","dragover"].forEach(function(n){$("drop").addEventListener(n,function(e){e.preventDefault();this.classList.add("over")})});
+  ["dragleave","drop"].forEach(function(n){$("drop").addEventListener(n,function(e){e.preventDefault();this.classList.remove("over")})});
+  $("drop").addEventListener("drop",function(e){pick(e.dataTransfer.files[0])});
+
+  $("text").maxLength=MAX;$("cnt").textContent="0 / "+MAX;
+  function updEst(n){
+    var spc=0.9;try{var v=parseFloat(localStorage.getItem("vc_spc"));if(v>0.1&&v<8)spc=v}catch(e){}
+    var sec=12+n*spc;
+    $("est").textContent=n<250?"Short text finishes faster on this server.":"Estimated time on this CPU server: about "+Math.max(1,Math.round(sec/60))+" min. Keep this page open.";
+  }
+  $("text").addEventListener("input",function(){var n=this.value.length;$("cnt").textContent=n+" / "+MAX;$("cnt").className="cnt"+(n>=MAX?" over":"");updEst(n)});
+
+  var progTimer=null,t0=0;
+  function setPct(n){
+    $("pct").textContent=n+"%";$("fill").style.width=n+"%";$("barwrap").setAttribute("aria-valuenow",n);
+    $("wh").textContent=n>=100?"Done":n<25?"Preparing your voice sample...":n<90?"Generating speech...":"Finishing the audio...";
+  }
+  function startProgress(chars){
+    var spc=0.9;
+    try{var v=parseFloat(localStorage.getItem("vc_spc"));if(v>0.1&&v<8)spc=v}catch(e){}
+    var expected=Math.max(15,12+chars*spc);
+    t0=Date.now();setPct(1);
+    $("wt").textContent="Estimated progress. Keep this page open.";
+    clearInterval(progTimer);
+    progTimer=setInterval(function(){
+      var t=(Date.now()-t0)/1000,p;
+      if(t<expected)p=1+89*(t/expected);else p=90+9*(1-Math.exp(-(t-expected)/40));
+      setPct(Math.max(1,Math.min(99,Math.floor(p))));
+      $("wt").textContent="Time elapsed "+mmss(t)+". Progress is an estimate; a short line can take a few minutes on this CPU server.";
+    },300);
+  }
+  function done100(chars){
+    clearInterval(progTimer);
+    try{
+      var el=(Date.now()-t0)/1000,m=(el-12)/Math.max(chars,20);
+      m=Math.min(6,Math.max(0.2,m));
+      var old=parseFloat(localStorage.getItem("vc_spc"))||0.9;
+      localStorage.setItem("vc_spc",String(0.5*old+0.5*m));
+    }catch(e){}
+    setPct(100);
+    return new Promise(function(r){setTimeout(r,700)});
+  }
+  function busy(b,chars){
+    $("go").disabled=b;$("go").textContent=b?"GENERATING...":"GENERATE VOICE";
+    document.body.classList.toggle("busy",b);$("work").classList.toggle("show",b);
+    if(b)startProgress(chars||100);else clearInterval(progTimer);
+  }
+
+  $("go").addEventListener("click",function(){
+    clear();$("res").classList.remove("show");
+    var text=$("text").value.trim();
+    if(!file)return say("Add a voice sample first.","error");
+    if(!text)return say("Type the text you want spoken.","error");
+    if(text.length>MAX)return say("Keep the text under "+MAX+" characters.","error");
+    if(!$("consent").checked)return say("Confirm that you own this voice or have permission to use it.","error");
+
+    var fd=new FormData();fd.append("voice",file);fd.append("text",text);fd.append("language",$("lang").value);
+    busy(true,text.length);
+    var ac=new AbortController(),to=setTimeout(function(){ac.abort()},600*60*1000);
+
+    fetch(API+"/api/clone",{method:"POST",body:fd,signal:ac.signal})
+    .then(function(r){return r.text().then(function(raw){
+      var d=null;try{d=JSON.parse(raw)}catch(e){}
+      if(!d)throw new Error("The server sent an unreadable reply. It may have timed out. Try a shorter text.");
+      if(!r.ok||!d.success||!d.audio_url)throw new Error(d.error||"Voice generation failed. Try again.");
+      return d.audio_url})})
+    .then(function(p){return fetch(/^https?:/i.test(p)?p:API+p)})
+    .then(function(r){if(!r.ok)throw new Error("The audio was made but could not be loaded. Try again.");return r.blob()})
+    .then(function(b){
+      return done100(text.length).then(function(){
+      if(outUrl)URL.revokeObjectURL(outUrl);outUrl=URL.createObjectURL(b);
+      $("out").src=outUrl;$("dl").href=outUrl;$("dl").download="voxclone-"+Date.now()+".wav";
+      $("res").classList.add("show");say("Done. Press play, or download the WAV.","ok");
+      $("res").scrollIntoView({behavior:"smooth",block:"nearest"});
+      });
+    })
+    .catch(function(e){say(e.name==="AbortError"?"This took too long and was stopped. Try a shorter text.":(e.message||"Could not reach the server."),"error")})
+    .then(function(){clearTimeout(to);busy(false)});
+  });
+
+  $("again").addEventListener("click",function(){$("res").classList.remove("show");$("out").pause();clear();$("text").focus()});
+})();
+</script>
+</body>
+</html>
+
